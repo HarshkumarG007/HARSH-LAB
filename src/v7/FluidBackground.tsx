@@ -1,4 +1,4 @@
-import { useRef, useMemo, useCallback } from 'react'
+import { useRef, useMemo, useCallback, useEffect } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 
@@ -122,8 +122,22 @@ export default function FluidBackground() {
     const mesh = new THREE.Mesh(quad, splatMat)
     scene.add(mesh)
 
-    return { velA, velB, dyeA, dyeB, splatMat, advectMat, displayMat, scene, camera, mesh }
+    return { velA, velB, dyeA, dyeB, splatMat, advectMat, displayMat, scene, camera, mesh, quad }
   }, [])
+
+  // Explicit resource disposal to prevent GPU memory leaks on unmount/remount
+  useEffect(() => {
+    return () => {
+      sim.velA.dispose()
+      sim.velB.dispose()
+      sim.dyeA.dispose()
+      sim.dyeB.dispose()
+      sim.splatMat.dispose()
+      sim.advectMat.dispose()
+      sim.displayMat.dispose()
+      sim.quad.dispose()
+    }
+  }, [sim])
 
   const renderWith = useCallback((mat: THREE.ShaderMaterial, target: THREE.WebGLRenderTarget | null) => {
     sim.mesh.material = mat as any
@@ -181,23 +195,17 @@ export default function FluidBackground() {
     renderWith(sim.advectMat, sim.dyeB)
     ;[sim.dyeA, sim.dyeB] = [sim.dyeB, sim.dyeA] // Swap
 
-    // Update display
+    // Update display by mutating the uniform of the stable displayMat,
+    // rather than replacing the entire material object on the mesh
     if (meshRef.current) {
       sim.displayMat.uniforms.uTexture.value = sim.dyeA.texture
-      ;(meshRef.current.material as any) = sim.displayMat
     }
   })
 
   return (
     <mesh ref={meshRef} scale={[20, 12, 1]} position={[0, 0, -5]}>
       <planeGeometry args={[1, 1]} />
-      <shaderMaterial
-        vertexShader={advectionVert}
-        fragmentShader={displayFrag}
-        uniforms={{ uTexture: { value: sim.dyeA.texture }, uAlpha: { value: 0.5 } }}
-        transparent
-        depthWrite={false}
-      />
+      <primitive object={sim.displayMat} attach="material" />
     </mesh>
   )
 }
