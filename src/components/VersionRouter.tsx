@@ -7,7 +7,7 @@ const PremiumVersion = lazy(() => import('../versions/PremiumVersion'))
 const GodTierVersion = lazy(() => import('../versions/GodTierVersion'))
 const EvidenceVersion = lazy(() => import('../versions/EvidenceVersion'))
 const PreciousMetalsVersion = lazy(() => import('../versions/PreciousMetalsVersion'))
-const NexusVersion = lazy(() => import('../versions/NexusVersion'))
+import NexusVersion from '../versions/NexusVersion'
 
 const versionComponents = {
   'v1-cyberpunk': CyberpunkVersion,
