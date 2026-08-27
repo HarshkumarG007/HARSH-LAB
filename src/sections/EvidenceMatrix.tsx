@@ -119,7 +119,7 @@ export default function EvidenceMatrix() {
                   <th className="text-left p-4">Repository</th>
                   <th className="text-center p-4">Commits</th>
                   <th className="text-center p-4">Tier</th>
-                  <th className="text-center p-4">Confidence</th>
+                  <th className="text-center p-4">Evidence Strength</th>
                   <th className="text-left p-4 min-w-[200px]">Status</th>
                 </tr>
               </thead>

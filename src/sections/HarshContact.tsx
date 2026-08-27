@@ -45,11 +45,11 @@ export default function HarshContact() {
             className="mb-14"
           >
             <a
-              href="mailto:harshkumarg@example.com"
+              href="mailto:harshkumarg007@gmail.com"
               className="group inline-flex items-center gap-4 text-2xl md:text-4xl font-mono text-primary hover:text-neon-cyan transition-colors duration-500"
             >
               <Mail className="w-8 h-8 text-neon-cyan/50 group-hover:text-neon-cyan transition-colors" />
-              <span className="link-underline">harshkumarg@example.com</span>
+              <span className="link-underline">harshkumarg007@gmail.com</span>
             </a>
           </motion.div>
 

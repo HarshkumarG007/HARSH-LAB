@@ -16,7 +16,7 @@ function HeroOverlay({ reduced }: { reduced: boolean }) {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: reduced ? 0 : 1.5, duration: reduced ? 0.1 : 2 }}
+        transition={{ delay: reduced ? 0 : 0.8, duration: reduced ? 0.1 : 1.2 }}
         className="absolute bottom-16 left-1/2 -translate-x-1/2"
       >
         <div className="flex flex-col items-center gap-2 text-white/30 text-xs font-mono tracking-widest">
@@ -402,6 +402,7 @@ export default function NexusVersion() {
           reduced={prefersReduced}
         />
 
+        <ContactOverlay />
         <SectionOverlay
           id="contact"
           title="Build something real."
@@ -409,6 +410,51 @@ export default function NexusVersion() {
           align="center"
           reduced={prefersReduced}
         />
+      </div>
+    </div>
+  )
+}
+
+// Add AFTER the credentials SectionOverlay and BEFORE the contact SectionOverlay
+// This appears at the same scroll position as the contact section
+function ContactOverlay() {
+  return (
+    <div
+      className="relative flex flex-col justify-center min-h-screen items-center text-center px-8"
+      style={{ pointerEvents: 'none' }}
+    >
+      {/* Visible contact links — pointer-events re-enabled */}
+      <div className="flex flex-col items-center gap-4 mt-32" style={{ pointerEvents: 'auto' }}>
+        <a
+          href="mailto:harshkumarg007@gmail.com"
+          className="font-mono text-sm text-white/40 hover:text-indigo-400 transition-colors
+                     focus:outline-none focus:ring-2 focus:ring-indigo-400 rounded px-2 py-1"
+          aria-label="Send email"
+        >
+          harshkumarg007@gmail.com
+        </a>
+        <div className="flex gap-6">
+          <a
+            href="https://github.com/HarshkumarG007"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-mono text-xs text-white/30 hover:text-white/70 transition-colors
+                       focus:outline-none focus:ring-2 focus:ring-indigo-400 rounded px-2 py-1"
+            aria-label="GitHub profile"
+          >
+            GitHub →
+          </a>
+          <a
+            href="https://www.linkedin.com/in/harshkumarg/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-mono text-xs text-white/30 hover:text-white/70 transition-colors
+                       focus:outline-none focus:ring-2 focus:ring-indigo-400 rounded px-2 py-1"
+            aria-label="LinkedIn profile"
+          >
+            LinkedIn →
+          </a>
+        </div>
       </div>
     </div>
   )

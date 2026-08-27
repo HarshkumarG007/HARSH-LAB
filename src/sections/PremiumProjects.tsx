@@ -79,7 +79,7 @@ export default function PremiumProjects() {
                     <div className="text-2xl font-display font-semibold text-text-primary">
                       {project.confidence}
                     </div>
-                    <div className="text-text-tertiary text-xs">Confidence</div>
+                    <div className="text-text-tertiary text-xs">Evidence Strength</div>
                   </div>
                 </div>
 

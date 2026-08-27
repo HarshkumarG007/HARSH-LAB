@@ -133,9 +133,9 @@ export default function VersionSwitcher() {
             <div className="p-4 border-b border-white/10">
               <h3 className="text-white font-semibold flex items-center gap-2">
                 <Sparkles size={16} className="text-amber-400" />
-                Design Versions
+                Design Archive
               </h3>
-              <p className="text-slate-400 text-xs mt-1">Switch between portfolio themes (Ctrl+Shift+V)</p>
+              <p className="text-slate-400 text-xs mt-1">Visual experiments archive (Ctrl+Shift+V)</p>
             </div>
 
             {/* Version List */}
