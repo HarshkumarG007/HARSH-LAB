@@ -1,13 +1,13 @@
 import { useVersion } from '../contexts/VersionContext'
 import { Suspense, lazy } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import NexusVersion from '../versions/NexusVersion'
 
 const CyberpunkVersion = lazy(() => import('../versions/CyberpunkVersion'))
 const PremiumVersion = lazy(() => import('../versions/PremiumVersion'))
 const GodTierVersion = lazy(() => import('../versions/GodTierVersion'))
 const EvidenceVersion = lazy(() => import('../versions/EvidenceVersion'))
 const PreciousMetalsVersion = lazy(() => import('../versions/PreciousMetalsVersion'))
-import NexusVersion from '../versions/NexusVersion'
 
 const versionComponents = {
   'v1-cyberpunk': CyberpunkVersion,
