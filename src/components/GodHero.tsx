@@ -1,49 +1,49 @@
-import { useRef, useEffect, useState } from 'react'
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
+import { useRef } from 'react'
+import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion'
 import RevealText from './RevealText'
 import MagneticButton from './MagneticButton'
 
 export default function GodHero() {
   const containerRef = useRef<HTMLDivElement>(null)
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  
+
+  // MotionValues — no useState, no re-renders on mouse move
+  const rawX = useMotionValue(0)
+  const rawY = useMotionValue(0)
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end start'],
   })
-  
+
   // Smooth scroll transforms
   const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%'])
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
   const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.9])
-  
-  // Spring physics for mouse follow
-  const springConfig = { stiffness: 100, damping: 30 }
-  const mouseX = useSpring(mousePosition.x, springConfig)
-  const mouseY = useSpring(mousePosition.y, springConfig)
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const { clientX, clientY } = e
-      const { innerWidth, innerHeight } = window
-      
-      setMousePosition({
-        x: (clientX - innerWidth / 2) / innerWidth * 100,
-        y: (clientY - innerHeight / 2) / innerHeight * 100,
-      })
-    }
-    
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
+  // Spring physics for mouse follow — feeds directly from MotionValues
+  const springConfig = { stiffness: 80, damping: 25, restDelta: 0.001 }
+  const mouseX = useSpring(rawX, springConfig)
+  const mouseY = useSpring(rawY, springConfig)
+
+  // Inverse for the second orb
+  const mouseXInv = useTransform(mouseX, v => -v * 0.5)
+  const mouseYInv = useTransform(mouseY, v => -v * 0.5)
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const { clientX, clientY } = e
+    const { innerWidth, innerHeight } = window
+    rawX.set((clientX - innerWidth / 2) / innerWidth * 80)
+    rawY.set((clientY - innerHeight / 2) / innerHeight * 80)
+  }
 
   return (
     <section
       ref={containerRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden material-hero"
+      onMouseMove={handleMouseMove}
     >
-      {/* Animated Background Orbs */}
-      <div className="absolute inset-0 pointer-events-none">
+      {/* Animated Background Orbs — moved by MotionValues, not state */}
+      <div className="absolute inset-0 pointer-events-none" style={{ contain: 'paint layout' }}>
         <motion.div
           className="absolute w-[800px] h-[800px] rounded-full bg-gradient-to-br from-indigo-500/20 to-purple-500/20 blur-[120px]"
           style={{
@@ -51,10 +51,10 @@ export default function GodHero() {
             y: mouseY,
             top: '10%',
             left: '10%',
+            willChange: 'transform',
           }}
           animate={{
-            scale: [1, 1.1, 1],
-            rotate: [0, 90, 0],
+            scale: [1, 1.08, 1],
           }}
           transition={{
             duration: 20,
@@ -65,10 +65,11 @@ export default function GodHero() {
         <motion.div
           className="absolute w-[600px] h-[600px] rounded-full bg-gradient-to-br from-rose-500/10 to-orange-500/10 blur-[100px]"
           style={{
-            x: useTransform(mouseX, v => -v * 0.5),
-            y: useTransform(mouseY, v => -v * 0.5),
+            x: mouseXInv,
+            y: mouseYInv,
             bottom: '10%',
             right: '10%',
+            willChange: 'transform',
           }}
           animate={{
             scale: [1.1, 1, 1.1],
@@ -82,7 +83,7 @@ export default function GodHero() {
       </div>
 
       {/* Content */}
-      <motion.div 
+      <motion.div
         style={{ y, opacity, scale }}
         className="relative z-10 max-w-6xl mx-auto px-6 text-center"
       >
@@ -99,7 +100,7 @@ export default function GodHero() {
           </span>
         </motion.div>
 
-        {/* Name - 3D Text Effect */}
+        {/* Name */}
         <div className="perspective-1000 mb-6 text-gold-leaf">
           <motion.h1
             initial={{ opacity: 0, rotateX: -90 }}
@@ -135,12 +136,12 @@ export default function GodHero() {
           transition={{ duration: 0.8, delay: 1.2 }}
           className="text-text-tertiary text-lg max-w-2xl mx-auto mb-12 leading-relaxed"
         >
-          303 commits across 12 repositories. 20 verified credentials. 
-          IBM SkillsBuild Faculty. Building intelligent systems with 
+          303 commits across 12 repositories. 20 verified credentials.
+          IBM SkillsBuild Faculty. Building intelligent systems with
           transparency and craft.
         </motion.p>
 
-        {/* CTA Buttons with magnetic effect */}
+        {/* CTA Buttons */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -165,7 +166,7 @@ export default function GodHero() {
               </motion.svg>
             </span>
           </MagneticButton>
-          
+
           <MagneticButton
             className="px-8 py-4 rounded-xl border border-white/10 text-text-secondary hover:text-white hover:border-white/20 hover:bg-white/5 transition-all"
             strength={0.15}
@@ -174,7 +175,7 @@ export default function GodHero() {
           </MagneticButton>
         </motion.div>
 
-        {/* Stats with staggered reveal */}
+        {/* Stats */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

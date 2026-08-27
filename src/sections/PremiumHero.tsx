@@ -1,45 +1,48 @@
-import { useEffect, useRef, useState } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { useRef } from 'react'
+import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion'
 import { ArrowRight, Sparkles } from 'lucide-react'
 
 export default function PremiumHero() {
   const containerRef = useRef<HTMLDivElement>(null)
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
-  
+
+  // MotionValues for orb parallax — zero re-renders
+  const rawX = useMotionValue(0)
+  const rawY = useMotionValue(0)
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end start'],
   })
-  
+
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
   const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.95])
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({
-        x: (e.clientX / window.innerWidth - 0.5) * 20,
-        y: (e.clientY / window.innerHeight - 0.5) * 20,
-      })
-    }
-    
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
+  const springConfig = { stiffness: 60, damping: 20 }
+  const orbX = useSpring(rawX, springConfig)
+  const orbY = useSpring(rawY, springConfig)
+  const orbXInv = useTransform(orbX, v => -v)
+  const orbYInv = useTransform(orbY, v => -v)
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    rawX.set((e.clientX / window.innerWidth - 0.5) * 20)
+    rawY.set((e.clientY / window.innerHeight - 0.5) * 20)
+  }
 
   return (
     <section
       ref={containerRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      onMouseMove={handleMouseMove}
     >
-      {/* Background Gradient Orbs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div 
+      {/* Background Gradient Orbs — GPU-composited, paint-contained */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ contain: 'paint layout' }}>
+        <motion.div
           className="gradient-orb w-[600px] h-[600px] bg-indigo-500 -top-20 -left-20"
-          style={{ transform: `translate(${mousePos.x}px, ${mousePos.y}px)` }}
+          style={{ x: orbX, y: orbY, willChange: 'transform' }}
         />
-        <div 
+        <motion.div
           className="gradient-orb w-[500px] h-[500px] bg-purple-500 bottom-0 right-0"
-          style={{ transform: `translate(${-mousePos.x}px, ${-mousePos.y}px)` }}
+          style={{ x: orbXInv, y: orbYInv, willChange: 'transform' }}
         />
         <div className="gradient-orb w-[400px] h-[400px] bg-rose-500/30 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
       </div>
@@ -47,7 +50,7 @@ export default function PremiumHero() {
       {/* Mesh Pattern */}
       <div className="absolute inset-0 bg-mesh opacity-30" />
 
-      <motion.div 
+      <motion.div
         style={{ opacity, scale }}
         className="relative z-10 max-w-5xl mx-auto px-6 text-center"
       >
@@ -93,8 +96,8 @@ export default function PremiumHero() {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="text-text-tertiary text-base md:text-lg max-w-2xl mx-auto mb-12 leading-relaxed"
         >
-          303 commits across 12 repositories. 20 verified credentials. 
-          IBM SkillsBuild Faculty. Building intelligent systems with 
+          303 commits across 12 repositories. 20 verified credentials.
+          IBM SkillsBuild Faculty. Building intelligent systems with
           transparency and craft.
         </motion.p>
 
@@ -109,8 +112,8 @@ export default function PremiumHero() {
             View Projects
             <ArrowRight size={18} />
           </a>
-          <a 
-            href="#contact" 
+          <a
+            href="#contact"
             className="px-8 py-3.5 rounded-xl border border-border hover:border-border-hover text-text-secondary hover:text-text-primary transition-all"
           >
             Get in Touch
@@ -125,18 +128,16 @@ export default function PremiumHero() {
           className="mt-20 pt-12 border-t border-border"
         >
           <div className="grid grid-cols-3 gap-8 max-w-lg mx-auto">
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-display font-semibold text-gradient-accent mb-1">303</div>
-              <div className="text-text-tertiary text-sm">Commits</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-display font-semibold text-gradient-accent mb-1">20</div>
-              <div className="text-text-tertiary text-sm">Credentials</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-display font-semibold text-gradient-accent mb-1">12</div>
-              <div className="text-text-tertiary text-sm">Repositories</div>
-            </div>
+            {[
+              { value: '303', label: 'Commits' },
+              { value: '20', label: 'Credentials' },
+              { value: '12', label: 'Repositories' },
+            ].map((stat) => (
+              <div key={stat.label} className="text-center">
+                <div className="text-3xl md:text-4xl font-display font-semibold text-gradient-accent mb-1">{stat.value}</div>
+                <div className="text-text-tertiary text-sm">{stat.label}</div>
+              </div>
+            ))}
           </div>
         </motion.div>
       </motion.div>

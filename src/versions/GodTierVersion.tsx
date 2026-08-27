@@ -6,10 +6,10 @@ import PremiumProjects from '../sections/PremiumProjects'
 import PremiumCredentials from '../sections/PremiumCredentials'
 import PremiumContact from '../sections/PremiumContact'
 import PremiumFooter from '../sections/PremiumFooter'
-import { useSmoothScroll } from '../hooks/useSmoothScroll'
+
 
 export default function GodTierVersion() {
-  useSmoothScroll()
+
 
   return (
     <div className="bg-bg text-text-primary min-h-screen relative cursor-none">

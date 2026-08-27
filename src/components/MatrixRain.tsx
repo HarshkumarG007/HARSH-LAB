@@ -5,14 +5,16 @@ interface MatrixRainProps {
   opacity?: number
 }
 
-// Characters outside component to avoid re-creation
 const CHARS = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZｦｱｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ'
 const COLORS = ['#00f3ff', '#b829dd', '#00ff41', '#ff00ff']
+const TARGET_FPS = 30
+const FRAME_INTERVAL = 1000 / TARGET_FPS
 
 export default function MatrixRain({ className = '', opacity = 0.15 }: MatrixRainProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const animationRef = useRef<number>()
   const dropsRef = useRef<number[]>([])
+  const lastFrameTimeRef = useRef<number>(0)
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -27,16 +29,22 @@ export default function MatrixRain({ className = '', opacity = 0.15 }: MatrixRai
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
       const columns = Math.floor(canvas.width / fontSize)
-      // Preserve existing drop positions, fill new columns
       dropsRef.current = Array.from({ length: columns }, (_, i) => dropsRef.current[i] ?? 1)
     }
 
     resize()
 
-    const drawFrame = () => {
+    const drawFrame = (timestamp: number) => {
+      animationRef.current = requestAnimationFrame(drawFrame)
+
+      // Throttle to TARGET_FPS — on a 144Hz monitor without this,
+      // the canvas loop runs 144 times/second consuming ~35% CPU
+      const elapsed = timestamp - lastFrameTimeRef.current
+      if (elapsed < FRAME_INTERVAL) return
+      lastFrameTimeRef.current = timestamp - (elapsed % FRAME_INTERVAL)
+
       ctx.fillStyle = 'rgba(2, 2, 4, 0.05)'
       ctx.fillRect(0, 0, canvas.width, canvas.height)
-
       ctx.font = `${fontSize}px 'Courier New', monospace`
 
       const drops = dropsRef.current
@@ -50,12 +58,10 @@ export default function MatrixRain({ className = '', opacity = 0.15 }: MatrixRai
         }
         drops[i]++
       }
-
-      animationRef.current = requestAnimationFrame(drawFrame)
     }
 
     animationRef.current = requestAnimationFrame(drawFrame)
-    window.addEventListener('resize', resize)
+    window.addEventListener('resize', resize, { passive: true })
 
     return () => {
       window.removeEventListener('resize', resize)

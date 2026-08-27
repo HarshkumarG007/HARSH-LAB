@@ -1,5 +1,5 @@
-import { useRef, useEffect, useState } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { useRef } from 'react'
+import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion'
 import { ChevronDown, Terminal, Cpu, Shield, Brain } from 'lucide-react'
 import { credentialStats } from '../data/credentials'
 
@@ -12,8 +12,10 @@ const pillars = [
 
 export default function HarshHero() {
   const containerRef = useRef<HTMLDivElement>(null)
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
-  const [currentTime, setCurrentTime] = useState(new Date())
+
+  // MotionValues — no useState, no re-renders on mouse move
+  const rawX = useMotionValue(0)
+  const rawY = useMotionValue(0)
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -23,26 +25,22 @@ export default function HarshHero() {
   const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%'])
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({
-        x: (e.clientX / window.innerWidth - 0.5) * 20,
-        y: (e.clientY / window.innerHeight - 0.5) * 20,
-      })
-    }
-    const timer = setInterval(() => setCurrentTime(new Date()), 1000)
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove)
-      clearInterval(timer)
-    }
-  }, [])
+  // Spring-smoothed motion values for the parallax title effect
+  const springConfig = { stiffness: 60, damping: 20 }
+  const titleX = useSpring(useTransform(rawX, v => v * 0.5), springConfig)
+  const titleY = useSpring(useTransform(rawY, v => v * 0.5), springConfig)
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    rawX.set((e.clientX / window.innerWidth - 0.5) * 20)
+    rawY.set((e.clientY / window.innerHeight - 0.5) * 20)
+  }
 
   return (
     <section
       ref={containerRef}
       id="home"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      onMouseMove={handleMouseMove}
     >
       <div className="absolute inset-0 grid-bg opacity-20 pointer-events-none" />
 
@@ -62,24 +60,19 @@ export default function HarshHero() {
             <span className="text-matrix-DEFAULT">ONLINE</span>
           </div>
           <div className="h-4 w-[1px] bg-secondary/30 hidden md:block" />
-          <span className="text-secondary">{currentTime.toLocaleTimeString()}</span>
-          <div className="h-4 w-[1px] bg-secondary/30 hidden md:block" />
           <span className="text-neon-cyan">{credentialStats.total}_CREDENTIALS_VERIFIED</span>
         </motion.div>
 
-        {/* Main Identity */}
+        {/* Main Identity — titleX/titleY are MotionValues, no re-render */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.8 }}
           className="relative mb-6"
         >
-          <h1
+          <motion.h1
             className="font-display font-bold tracking-tighter leading-none"
-            style={{
-              transform: `translate(${mousePos.x * 0.5}px, ${mousePos.y * 0.5}px)`,
-              transition: 'transform 0.4s ease-out',
-            }}
+            style={{ x: titleX, y: titleY }}
           >
             <span className="block text-5xl sm:text-7xl md:text-8xl lg:text-9xl text-transparent bg-clip-text bg-gradient-to-b from-primary to-secondary/50">
               HARSH KUMAR
@@ -90,7 +83,7 @@ export default function HarshHero() {
             >
               GUPTA
             </span>
-          </h1>
+          </motion.h1>
         </motion.div>
 
         {/* Role Pill */}

@@ -2,7 +2,15 @@ import { motion } from 'framer-motion'
 import { Mail, Github, Linkedin, ExternalLink } from 'lucide-react'
 import Gemstone from '../components/Gemstone'
 
+// Email assembled at runtime to prevent scraper harvesting
+const getEmail = () => ['hrslsha007', 'gmail', 'com'].join('@').replace('@gmail@', '@gmail.')
+
 export default function PremiumContact() {
+  const handleEmailClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
+    window.location.href = `mailto:${getEmail()}`
+  }
+
   return (
     <section id="contact" className="relative py-32 material-contact border-t border-border">
       <div className="max-w-4xl mx-auto px-6 text-center">
@@ -28,12 +36,14 @@ export default function PremiumContact() {
           transition={{ delay: 0.2 }}
           className="flex flex-col md:flex-row items-center justify-center gap-6 mb-16"
         >
+          {/* SEC-05: Email assembled at runtime to prevent scraper harvesting */}
           <a
-            href="mailto:harshkumarg@example.com"
+            href="#"
+            onClick={handleEmailClick}
             className="flex items-center gap-3 px-8 py-4 card-premium text-lg font-medium hover:text-accent-light transition-colors w-full md:w-auto justify-center"
           >
             <Mail className="text-accent" />
-            harshkumarg@example.com
+            hrslsha007 [at] gmail.com
           </a>
         </motion.div>
 

@@ -1,9 +1,7 @@
 import { useVersion } from '../contexts/VersionContext'
 import { Suspense, lazy } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { AlertCircle } from 'lucide-react'
 
-// Preload critical versions
 const CyberpunkVersion = lazy(() => import('../versions/CyberpunkVersion'))
 const PremiumVersion = lazy(() => import('../versions/PremiumVersion'))
 const GodTierVersion = lazy(() => import('../versions/GodTierVersion'))
@@ -18,26 +16,8 @@ const versionComponents = {
   'v5-precious-metals': PreciousMetalsVersion,
 }
 
-// Error Boundary Component
-function ErrorFallback({ error }: { error: Error }) {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-900 text-white p-8">
-      <div className="text-center">
-        <AlertCircle size={48} className="mx-auto mb-4 text-red-400" />
-        <h2 className="text-xl font-bold mb-2">Failed to load version</h2>
-        <p className="text-slate-400 mb-4">{error.message}</p>
-        <button 
-          onClick={() => window.location.reload()}
-          className="px-4 py-2 bg-indigo-500 rounded-lg hover:bg-indigo-600"
-        >
-          Reload Page
-        </button>
-      </div>
-    </div>
-  )
-}
 
-// Loading Spinner
+
 function VersionLoader() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-900">
@@ -52,22 +32,18 @@ function VersionLoader() {
 
 export default function VersionRouter() {
   const { currentVersion } = useVersion()
-  const error = null // Error Boundary logic will be moved to a real class component later if needed
   const CurrentVersion = versionComponents[currentVersion]
 
-  if (error) {
-    return <ErrorFallback error={error} />
-  }
-
   return (
+    // No will-change here — promotes entire page to GPU layer unnecessarily
     <AnimatePresence mode="wait">
       <motion.div
         key={currentVersion}
-        initial={{ opacity: 0, filter: 'blur(10px)' }}
-        animate={{ opacity: 1, filter: 'blur(0px)' }}
-        exit={{ opacity: 0, filter: 'blur(10px)' }}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        className="w-full h-full min-h-screen will-change-transform"
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -8 }}
+        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+        className="w-full min-h-screen"
       >
         <Suspense fallback={<VersionLoader />}>
           <CurrentVersion />
