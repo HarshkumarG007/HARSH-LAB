@@ -16,6 +16,10 @@
     <meta property="og:description" content="Where AI becomes systems. The personal engineering portfolio and experimental workspace of Harsh Kumar Gupta." />
     <meta property="og:image" content="/og-image.jpg" />
     <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="HARSH LAB — AI Systems & Applied Engineering" />
+    <meta name="twitter:description" content="An Engineering Lab by Harsh Kumar Gupta. Interactive 3D portfolio." />
+    <meta name="twitter:image" content="/og-image.jpg" />
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,9 +27,52 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <title>HARSH LAB — AI Systems & Applied Engineering</title>
+    
+    <style>
+      /* FCP (First Contentful Paint) Loader */
+      #initial-loader {
+        position: fixed;
+        inset: 0;
+        background: #050510;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 99999;
+        transition: opacity 0.5s ease;
+      }
+      .loader-text {
+        color: #00FF41;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 14px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        animation: pulse 1.5s ease-in-out infinite;
+      }
+      @keyframes pulse {
+        0%, 100% { opacity: 0.5; }
+        50% { opacity: 1; }
+      }
+    </style>
   </head>
   <body>
+    <div id="initial-loader">
+      <div class="loader-text">SYS.BOOT</div>
+    </div>
+    
     <div id="root"></div>
+    <script>
+      // Remove FCP loader once React mounts and fires its own LoadingScreen
+      window.addEventListener('load', () => {
+        const loader = document.getElementById('initial-loader');
+        if (loader) {
+          setTimeout(() => {
+            loader.style.opacity = '0';
+            setTimeout(() => loader.remove(), 500);
+          }, 100);
+        }
+      });
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
