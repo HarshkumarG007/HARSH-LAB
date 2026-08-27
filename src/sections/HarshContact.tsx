@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
+import ContactFormModal from '../components/ContactFormModal'
 import { Mail, Github, Linkedin, Terminal } from 'lucide-react'
 
 const links = [
@@ -8,6 +10,8 @@ const links = [
 ]
 
 export default function HarshContact() {
+  const [isContactFormOpen, setIsContactFormOpen] = useState(false)
+
   return (
     <section id="contact" className="relative py-32 md:py-48 min-h-screen flex items-center">
       <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full">
@@ -44,13 +48,14 @@ export default function HarshContact() {
             transition={{ delay: 0.2 }}
             className="mb-14"
           >
-            <a
-              href="mailto:harshkumarg007@gmail.com"
-              className="group inline-flex items-center gap-4 text-2xl md:text-4xl font-mono text-primary hover:text-neon-cyan transition-colors duration-500"
+            <button
+              onClick={() => setIsContactFormOpen(true)}
+              className="group inline-flex items-center gap-4 text-2xl md:text-4xl font-mono text-primary hover:text-neon-cyan transition-colors duration-500 bg-transparent border-none p-0 cursor-pointer text-left"
+              aria-label="Send email via contact form"
             >
               <Mail className="w-8 h-8 text-neon-cyan/50 group-hover:text-neon-cyan transition-colors" />
-              <span className="link-underline">harshkumarg007@gmail.com</span>
-            </a>
+              <span className="link-underline">Start a Conversation</span>
+            </button>
           </motion.div>
 
           {/* Social Links */}
@@ -111,6 +116,7 @@ export default function HarshContact() {
           className="absolute -left-1/4 bottom-1/4 w-[400px] h-[400px] rounded-full bg-neon-magenta/5 blur-[120px]"
         />
       </div>
+      <ContactFormModal isOpen={isContactFormOpen} onClose={() => setIsContactFormOpen(false)} />
     </section>
   )
 }

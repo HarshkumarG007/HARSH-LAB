@@ -12,12 +12,13 @@ interface ContactOrb {
 }
 
 const CONTACT_ORBS: ContactOrb[] = [
-  { label: 'GitHub',   icon: '⌨',  url: 'https://github.com/HarshkumarG007',            color: '#e2e8f0', position: [-4, 0, 0] },
-  { label: 'LinkedIn', icon: '🔗', url: 'https://www.linkedin.com/in/harshkumarg/',      color: '#60a5fa', position: [0, 0, 0] },
-  { label: 'Credly',   icon: '🏅', url: 'https://www.credly.com/users/harshkumarg',     color: '#fbbf24', position: [4, 0, 0] },
+  { label: 'GitHub',   icon: '⌨',  url: 'https://github.com/HarshkumarG007',            color: '#e2e8f0', position: [-6, 0, 0] },
+  { label: 'LinkedIn', icon: '🔗', url: 'https://www.linkedin.com/in/harshkumarg/',      color: '#60a5fa', position: [-2, 0, 0] },
+  { label: 'Credly',   icon: '🏅', url: 'https://www.credly.com/users/harshkumarg',     color: '#fbbf24', position: [2, 0, 0] },
+  { label: 'Email',    icon: '✉',  url: 'contact',                                     color: '#ec4899', position: [6, 0, 0] },
 ]
 
-function MagneticOrb({ orb, index }: { orb: ContactOrb; index: number }) {
+function MagneticOrb({ orb, index, onEmailClick }: { orb: ContactOrb; index: number; onEmailClick?: () => void }) {
   const groupRef   = useRef<THREE.Group>(null)
   const coreRef    = useRef<THREE.Mesh>(null)
   const [hovered, setHovered] = useState(false)
@@ -57,7 +58,11 @@ function MagneticOrb({ orb, index }: { orb: ContactOrb; index: number }) {
   })
 
   const handleClick = () => {
-    window.open(orb.url, '_blank', 'noopener,noreferrer')
+    if (orb.url === 'contact') {
+      onEmailClick?.()
+    } else {
+      window.open(orb.url, '_blank', 'noopener,noreferrer')
+    }
     // Impulse on click
     vel.current.set(
       (Math.random() - 0.5) * 0.5,
@@ -155,12 +160,12 @@ function ConnectionLines() {
   )
 }
 
-export default function MagneticOrbs() {
+export default function MagneticOrbs({ onEmailClick }: { onEmailClick?: () => void }) {
   return (
     <group>
       <ConnectionLines />
       {CONTACT_ORBS.map((orb, i) => (
-        <MagneticOrb key={orb.label} orb={orb} index={i} />
+        <MagneticOrb key={orb.label} orb={orb} index={i} onEmailClick={onEmailClick} />
       ))}
     </group>
   )

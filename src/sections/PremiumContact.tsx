@@ -1,14 +1,18 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Mail, Github, Linkedin, ExternalLink } from 'lucide-react'
 import Gemstone from '../components/Gemstone'
+import ContactFormModal from '../components/ContactFormModal'
 
 // Email assembled at runtime to prevent scraper harvesting
 const getEmail = () => ['hrslsha007', 'gmail', 'com'].join('@').replace('@gmail@', '@gmail.')
 
 export default function PremiumContact() {
+  const [isContactFormOpen, setIsContactFormOpen] = useState(false)
+
   const handleEmailClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
-    window.location.href = `mailto:${getEmail()}`
+    setIsContactFormOpen(true)
   }
 
   return (
@@ -89,6 +93,7 @@ export default function PremiumContact() {
           </a>
         </motion.div>
       </div>
+      <ContactFormModal isOpen={isContactFormOpen} onClose={() => setIsContactFormOpen(false)} />
     </section>
   )
 }

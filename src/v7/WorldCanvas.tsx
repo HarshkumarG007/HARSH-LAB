@@ -28,7 +28,7 @@ import { MotionValue } from 'framer-motion'
 import { Project } from '../data/projects'
 
 // Section groups positioned in 3D world space
-function WorldScene({ mouseX, mouseY, onProjectSelect }: { mouseX: MotionValue<number>; mouseY: MotionValue<number>; onProjectSelect?: (project: Project) => void }) {
+function WorldScene({ mouseX, mouseY, onProjectSelect, onEmailClick }: { mouseX: MotionValue<number>; mouseY: MotionValue<number>; onProjectSelect?: (project: Project) => void; onEmailClick?: () => void }) {
   return (
     <>
       <SceneLighting />
@@ -62,9 +62,8 @@ function WorldScene({ mouseX, mouseY, onProjectSelect }: { mouseX: MotionValue<n
         <CredentialConstellation />
       </group>
 
-      {/* CONTACT section: forward and centered */}
       <group position={[0, -1, -20]}>
-        <MagneticOrbs />
+        <MagneticOrbs onEmailClick={onEmailClick} />
       </group>
     </>
   )
@@ -75,9 +74,10 @@ interface WorldCanvasProps {
   mouseY: MotionValue<number>
   isMobile: boolean
   onProjectSelect?: (project: Project) => void
+  onEmailClick?: () => void
 }
 
-export default function WorldCanvas({ mouseX, mouseY, isMobile, onProjectSelect }: WorldCanvasProps) {
+export default function WorldCanvas({ mouseX, mouseY, isMobile, onProjectSelect, onEmailClick }: WorldCanvasProps) {
   const scrollCamRef = useRef(null)
 
   // Pause rendering when tab is backgrounded — saves CPU/GPU for nothing the user can see
@@ -110,7 +110,7 @@ export default function WorldCanvas({ mouseX, mouseY, isMobile, onProjectSelect 
       }}
     >
       <Suspense fallback={null}>
-        <WorldScene mouseX={mouseX} mouseY={mouseY} onProjectSelect={onProjectSelect} />
+        <WorldScene mouseX={mouseX} mouseY={mouseY} onProjectSelect={onProjectSelect} onEmailClick={onEmailClick} />
         <ScrollCamera ref={scrollCamRef} />
         {!isMobile && <PostProcessing />}
         {/* Removed CDN Environment preset to prevent fetch errors; using SceneLighting instead */}

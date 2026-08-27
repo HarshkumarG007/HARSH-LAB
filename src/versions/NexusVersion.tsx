@@ -3,6 +3,7 @@ import { motion, AnimatePresence, useMotionValue, useReducedMotion } from 'frame
 import WorldCanvas from '../v7/WorldCanvas'
 import LoadingScreen from '../components/LoadingScreen'
 import ProjectModal from '../components/ProjectModal'
+import ContactFormModal from '../components/ContactFormModal'
 import { credentialStats, credentials } from '../data/credentials'
 import { projects, Project } from '../data/projects'
 import { repositoryEvidence } from '../data/evidence'
@@ -221,7 +222,7 @@ function NexusHUD({ progress }: { progress: number }) {
 // ─── NEXUS Lite — real mobile experience ──────────────────────────────────────
 // No 3D canvas. Same information architecture. Same visual character.
 
-function NexusLite() {
+function NexusLite({ onContactClick }: { onContactClick: () => void }) {
   const featuredProjects = projects.filter(p => p.featured)
   const topCredentials = credentials.slice(0, 6)
 
@@ -268,13 +269,13 @@ function NexusLite() {
             >
               GitHub →
             </a>
-            <a
-              href="mailto:harshkumarg007@gmail.com"
+            <button
+              onClick={onContactClick}
               className="px-5 py-2.5 border border-white/20 hover:border-white/40 rounded-lg text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400"
               aria-label="Send email"
             >
               Contact
-            </a>
+            </button>
           </div>
         </section>
 
@@ -345,14 +346,14 @@ function NexusLite() {
             Open to AI/ML engineering roles, applied research, and interesting problems.
           </p>
           <div className="space-y-3">
-            <a
-              href="mailto:harshkumarg007@gmail.com"
-              className="flex items-center gap-3 p-4 rounded-xl border border-white/10 hover:border-indigo-500/40 bg-white/2 hover:bg-indigo-950/20 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-400"
-              aria-label="Send email to harshkumarg007@gmail.com"
+            <button
+              onClick={onContactClick}
+              className="w-full flex items-center gap-3 p-4 rounded-xl border border-white/10 hover:border-indigo-500/40 bg-white/2 hover:bg-indigo-950/20 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-400 text-left"
+              aria-label="Send message via contact form"
             >
-              <span className="text-indigo-400 font-mono text-xs">EMAIL</span>
-              <span className="text-white/60 text-sm">harshkumarg007@gmail.com</span>
-            </a>
+              <span className="text-indigo-400 font-mono text-xs">SECURE CHANNEL</span>
+              <span className="text-white/60 text-sm">Send Message</span>
+            </button>
             <a
               href="https://github.com/HarshkumarG007"
               target="_blank"
@@ -378,6 +379,7 @@ function NexusLite() {
 
 export default function NexusVersion() {
   const [activeProject, setActiveProject] = useState<Project | null>(null)
+  const [isContactFormOpen, setIsContactFormOpen] = useState(false)
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
   const scrollProgress = useMotionValue(0)
@@ -419,7 +421,7 @@ export default function NexusVersion() {
   }, [mouseX, mouseY, scrollProgress])
 
   // MOBILE: real NEXUS Lite — same content, no expensive 3D
-  if (isMobile) return <NexusLite />
+  if (isMobile) return <NexusLite onContactClick={() => setIsContactFormOpen(true)} />
 
   return (
     <div className="relative text-white" style={{ background: '#050510' }}>
@@ -433,9 +435,16 @@ export default function NexusVersion() {
 
       <LoadingScreen />
       <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} />
+      <ContactFormModal isOpen={isContactFormOpen} onClose={() => setIsContactFormOpen(false)} />
 
       {/* Fixed 3D Canvas — the world */}
-      <WorldCanvas mouseX={mouseX} mouseY={mouseY} isMobile={false} onProjectSelect={setActiveProject} />
+      <WorldCanvas 
+        mouseX={mouseX} 
+        mouseY={mouseY} 
+        isMobile={false} 
+        onProjectSelect={(project) => setActiveProject(project)}
+        onEmailClick={() => setIsContactFormOpen(true)}
+      />
 
       {/* Scrollable HTML overlay */}
       <div id="main-content" className="relative z-10" style={{ pointerEvents: 'none' }}>
