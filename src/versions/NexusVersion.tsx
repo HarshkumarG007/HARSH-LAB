@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion, useMotionValue, useReducedMotion } from 'framer-motion'
 import WorldCanvas from '../v7/WorldCanvas'
+import LoadingScreen from '../components/LoadingScreen'
 import { credentialStats, credentials } from '../data/credentials'
 import { projects } from '../data/projects'
 import { repositoryEvidence } from '../data/evidence'
@@ -366,6 +367,8 @@ export default function NexusVersion() {
       >
         Skip to main content
       </a>
+
+      <LoadingScreen />
 
       {/* Fixed 3D Canvas — the world */}
       <WorldCanvas mouseX={mouseX} mouseY={mouseY} isMobile={false} />

@@ -1,84 +1,53 @@
-import { motion } from 'framer-motion'
+import { useProgress } from '@react-three/drei'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useEffect, useState } from 'react'
 
 export default function LoadingScreen() {
-  return (
-    <motion.div
-      initial={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed inset-0 z-[100] bg-background flex flex-col items-center justify-center"
-    >
-      <div className="text-center space-y-8">
-        {/* Logo Mark */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6 }}
-          className="text-4xl font-display font-bold text-gradient mb-4"
-        >
-          YN.
-        </motion.div>
+  const { progress, active } = useProgress()
+  const [show, setShow] = useState(true)
 
-        {/* Loading Text */}
+  useEffect(() => {
+    // Keep showing until progress is 100 and Drei says it's not active
+    // Add a small delay so the user can see 100% before it fades out
+    if (progress === 100 && !active) {
+      const timer = setTimeout(() => setShow(false), 800)
+      return () => clearTimeout(timer)
+    }
+  }, [progress, active])
+
+  return (
+    <AnimatePresence>
+      {show && (
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="space-y-2"
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1, ease: 'easeInOut' }}
+          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#050510]"
+          aria-live="polite"
+          aria-busy="true"
         >
-          <p className="text-secondary text-xs tracking-[0.3em] uppercase">
-            Initializing Environment
-          </p>
-          <div className="flex items-center justify-center gap-1">
-            <span className="loading-dot w-2 h-2 rounded-full bg-accent" />
-            <span className="loading-dot w-2 h-2 rounded-full bg-accent" />
-            <span className="loading-dot w-2 h-2 rounded-full bg-accent" />
+          <div className="w-64 flex flex-col gap-4 items-center">
+            <div className="text-neon-cyan font-mono text-sm tracking-widest uppercase">
+              INITIALIZING NEXUS
+            </div>
+            
+            {/* Progress Bar Container */}
+            <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden">
+              <motion.div 
+                className="h-full bg-neon-cyan shadow-[0_0_10px_#00FF41]"
+                initial={{ width: 0 }}
+                animate={{ width: `${progress}%` }}
+                transition={{ ease: "easeOut", duration: 0.3 }}
+              />
+            </div>
+            
+            <div className="flex justify-between w-full text-white/50 font-mono text-xs">
+              <span>SYS.BOOT</span>
+              <span>{Math.round(progress)}%</span>
+            </div>
           </div>
         </motion.div>
-        
-        {/* Progress Bar */}
-        <div className="w-48 h-[2px] bg-surface overflow-hidden">
-          <motion.div
-            className="h-full bg-gradient-to-r from-accent to-accent-secondary"
-            initial={{ width: 0 }}
-            animate={{ width: '100%' }}
-            transition={{ duration: 2, ease: 'easeInOut' }}
-          />
-        </div>
-        
-        {/* Status Messages */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="space-y-1"
-        >
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: [0, 1, 0] }}
-            transition={{ duration: 1.5, times: [0, 0.5, 1] }}
-            className="text-secondary text-xs tracking-wider"
-          >
-            Loading 3D System
-          </motion.p>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: [0, 1, 0] }}
-            transition={{ duration: 1.5, times: [0, 0.5, 1], delay: 0.5 }}
-            className="text-secondary text-xs tracking-wider"
-          >
-            Calibrating Experience
-          </motion.p>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.5 }}
-            className="text-primary text-xs tracking-wider font-medium"
-          >
-            Ready
-          </motion.p>
-        </motion.div>
-      </div>
-    </motion.div>
+      )}
+    </AnimatePresence>
   )
 }
