@@ -50,11 +50,34 @@ export function VersionProvider({ children }: { children: React.ReactNode }) {
   const [currentVersion, setCurrentVersion] = useState<DesignVersion>('v7-nexus')
   const [isTransitioning, setIsTransitioning] = useState(false)
 
+  // Initialize version from URL
   useEffect(() => {
-    const saved = localStorage.getItem('portfolio-version') as DesignVersion
-    if (saved && VERSION_NAMES[saved]) {
-      setCurrentVersion(saved)
+    const path = window.location.pathname
+    let initialVersion: DesignVersion = 'v7-nexus'
+    
+    if (path === '/experiments/matrix') initialVersion = 'v1-cyberpunk'
+    else if (path === '/experiments/luxe') initialVersion = 'v2-premium'
+    else if (path === '/experiments/god') initialVersion = 'v3-god-tier'
+    else if (path === '/experiments/evidence') initialVersion = 'v4-evidence'
+    else if (path === '/experiments/metals') initialVersion = 'v5-precious-metals'
+    
+    setCurrentVersion(initialVersion)
+    
+    // Listen for browser back/forward navigation
+    const handlePopState = () => {
+      const p = window.location.pathname
+      let v: DesignVersion = 'v7-nexus'
+      if (p === '/experiments/matrix') v = 'v1-cyberpunk'
+      else if (p === '/experiments/luxe') v = 'v2-premium'
+      else if (p === '/experiments/god') v = 'v3-god-tier'
+      else if (p === '/experiments/evidence') v = 'v4-evidence'
+      else if (p === '/experiments/metals') v = 'v5-precious-metals'
+      
+      setCurrentVersion(v)
     }
+    
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
   }, [])
 
   const setVersion = useCallback((version: DesignVersion) => {
@@ -62,7 +85,17 @@ export function VersionProvider({ children }: { children: React.ReactNode }) {
     setIsTransitioning(true)
     setTimeout(() => {
       setCurrentVersion(version)
-      localStorage.setItem('portfolio-version', version)
+      
+      // Update URL without reloading
+      let newPath = '/'
+      if (version === 'v1-cyberpunk') newPath = '/experiments/matrix'
+      else if (version === 'v2-premium') newPath = '/experiments/luxe'
+      else if (version === 'v3-god-tier') newPath = '/experiments/god'
+      else if (version === 'v4-evidence') newPath = '/experiments/evidence'
+      else if (version === 'v5-precious-metals') newPath = '/experiments/metals'
+      
+      window.history.pushState({}, '', newPath)
+      
       setTimeout(() => setIsTransitioning(false), 500)
     }, 300)
   }, [currentVersion])
