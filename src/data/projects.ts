@@ -272,15 +272,10 @@ export const projects: Project[] = [
   },
 ]
 
+// Derived from actual project data — never manually maintained
 export const projectCategories = [
   'All',
-  'ML Engineering',
-  'AI Security',
-  'GenAI',
-  'NLP',
-  'Robotics',
-  'Full Stack',
-  'Template',
+  ...Array.from(new Set(projects.map(p => p.category))).sort(),
 ]
 
 // Legacy exports for any components still referencing old shape

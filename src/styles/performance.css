@@ -1,6 +1,7 @@
 /* ============================================
-   PERFORMANCE OPTIMIZATIONS
-   60fps Guaranteed
+   PERFORMANCE OPTIMIZATION HINTS
+   These are hints to the browser, not guarantees.
+   Profile before adding will-change to new elements.
    ============================================ */
 
 /* GPU Acceleration - Use sparingly */
@@ -83,8 +84,9 @@ img {
   font-display: swap;
 }
 
-/* Reduce repaints */
+/* Use only on elements confirmed by profiling to benefit from GPU promotion.
+   Overuse of will-change degrades performance. */
 .fixed-gpu {
   transform: translate3d(0, 0, 0);
-  will-change: transform;
+  /* will-change intentionally omitted — apply only after profiling */
 }

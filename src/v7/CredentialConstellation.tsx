@@ -76,18 +76,21 @@ function OrbitalRing({ radius, tilt, color }: {
 }
 
 export default function CredentialConstellation() {
-  const orbCount = credentialStats.total // 20 credentials
+  const orbCount = credentialStats.total // derived from actual credential array
   const orbitLayers = [
-    { radius: 3,   speed: 1.0,  color: '#4285F4', label: 'Google' },  // Google blue
-    { radius: 5,   speed: 0.7,  color: '#0062FF', label: 'IBM' },     // IBM blue
-    { radius: 7,   speed: 0.4,  color: '#818cf8', label: 'Mixed' },   // Indigo
+    { radius: 3,   speed: 1.0,  color: '#4285F4', label: 'Google' },
+    { radius: 5,   speed: 0.7,  color: '#0062FF', label: 'IBM' },
+    { radius: 7,   speed: 0.4,  color: '#818cf8', label: 'Mixed' },
   ]
 
   const orbs = useMemo(() => {
     const result = []
     let idx = 0
-    // Distribute 20 credentials across 3 orbital rings
-    const distribution = [8, 8, 4]
+    // Distribute credentials evenly — computed, not hardcoded
+    const perLayer = Math.ceil(orbCount / orbitLayers.length)
+    const distribution = orbitLayers.map((_, i) =>
+      Math.min(perLayer, orbCount - i * perLayer)
+    )
     for (let layer = 0; layer < orbitLayers.length; layer++) {
       for (let i = 0; i < distribution[layer] && idx < orbCount; i++) {
         result.push({

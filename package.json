@@ -20,16 +20,15 @@
     "postprocessing": "^6.39.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "three": "^0.169.0",
-    "zustand": "^4.4.7"
+    "three": "^0.169.0"
   },
   "devDependencies": {
     "@types/node": "^20.10.6",
     "@types/react": "^18.2.46",
     "@types/react-dom": "^18.2.18",
     "@types/three": "^0.160.0",
-    "@typescript-eslint/eslint-plugin": "^6.16.0",
-    "@typescript-eslint/parser": "^6.16.0",
+    "@typescript-eslint/eslint-plugin": "^8.68.0",
+    "@typescript-eslint/parser": "^8.68.0",
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.16",
     "eslint": "^8.56.0",
@@ -38,6 +37,6 @@
     "postcss": "^8.4.32",
     "tailwindcss": "^3.4.0",
     "typescript": "^5.3.3",
-    "vite": "^5.0.10"
+    "vite": "^8.2.2"
   }
 }

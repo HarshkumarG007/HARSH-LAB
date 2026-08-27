@@ -154,7 +154,7 @@ export default function EvidenceMatrix() {
                         {repo.tier}
                       </span>
                     </td>
-                    <td className="p-4 text-center font-mono text-secondary text-xs">{repo.confidence}</td>
+                    <td className="p-4 text-center font-mono text-secondary text-xs">{repo.evidenceStrength}</td>
                     <td className="p-4 text-secondary/80 text-xs font-mono">{repo.status}</td>
                   </motion.tr>
                 ))}

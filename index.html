@@ -1,6 +1,10 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <script>
+      window.addEventListener("error", e => document.body.innerHTML += "<h1 style='color:red;z-index:9999;position:absolute'>" + (e.error ? e.error.stack : e.message) + "</h1>");
+      window.addEventListener("unhandledrejection", e => document.body.innerHTML += "<h1 style='color:red;z-index:9999;position:absolute'>" + (e.reason ? e.reason.stack : e.reason) + "</h1>");
+    </script>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

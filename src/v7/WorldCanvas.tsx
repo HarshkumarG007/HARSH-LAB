@@ -1,4 +1,4 @@
-import { useRef, Suspense } from 'react'
+import { useRef, Suspense, useState, useEffect } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { Stars } from '@react-three/drei'
 import AuroraBackground       from './AuroraBackground'
@@ -77,9 +77,20 @@ interface WorldCanvasProps {
 export default function WorldCanvas({ mouseX, mouseY, isMobile }: WorldCanvasProps) {
   const scrollCamRef = useRef(null)
 
+  // Pause rendering when tab is backgrounded — saves CPU/GPU for nothing the user can see
+  const [frameloop, setFrameloop] = useState<'always' | 'never'>('always')
+  useEffect(() => {
+    const handleVisibility = () => {
+      setFrameloop(document.hidden ? 'never' : 'always')
+    }
+    document.addEventListener('visibilitychange', handleVisibility)
+    return () => document.removeEventListener('visibilitychange', handleVisibility)
+  }, [])
+
   return (
     <Canvas
       camera={{ position: [0, 0, 14], fov: 60, near: 0.1, far: 200 }}
+      frameloop={frameloop}
       dpr={isMobile ? [1, 1] : [1, 2]}
       gl={{
         antialias: !isMobile,
