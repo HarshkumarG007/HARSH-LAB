@@ -364,6 +364,16 @@ function NexusLite({ onContactClick }: { onContactClick: () => void }) {
               <span className="text-indigo-400 font-mono text-xs">GITHUB</span>
               <span className="text-white/60 text-sm">HarshkumarG007</span>
             </a>
+            <a
+              href="https://www.linkedin.com/in/harshkumarg/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 p-4 rounded-xl border border-white/10 hover:border-indigo-500/40 bg-white/2 hover:bg-indigo-950/20 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              aria-label="View LinkedIn profile"
+            >
+              <span className="text-indigo-400 font-mono text-xs">LINKEDIN</span>
+              <span className="text-white/60 text-sm">harshkumarg</span>
+            </a>
           </div>
         </section>
       </main>
