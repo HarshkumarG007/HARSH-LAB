@@ -79,8 +79,7 @@ function ParticleField() {
         <bufferAttribute
           attach="attributes-position"
           count={particles.length / 3}
-          array={particles}
-          itemSize={3}
+          args={[particles, 3]}
         />
       </bufferGeometry>
       <pointsMaterial
@@ -129,11 +128,10 @@ function ConnectionLines() {
             <bufferAttribute
               attach="attributes-position"
               count={2}
-              array={new Float32Array([
+              args={[new Float32Array([
                 lineItem.start.x, lineItem.start.y, lineItem.start.z,
                 lineItem.end.x, lineItem.end.y, lineItem.end.z,
-              ])}
-              itemSize={3}
+              ]), 3]}
             />
           </bufferGeometry>
           <lineBasicMaterial color="#7C5CFF" transparent opacity={0.2} />

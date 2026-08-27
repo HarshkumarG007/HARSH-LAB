@@ -136,8 +136,8 @@ function LightTrails() {
   return (
     <points ref={points}>
       <bufferGeometry>
-        <bufferAttribute attach="attributes-position" count={positions.length / 3} array={positions} itemSize={3} />
-        <bufferAttribute attach="attributes-color" count={colors.length / 3} array={colors} itemSize={3} />
+        <bufferAttribute attach="attributes-position" count={positions.length / 3} args={[positions, 3]} />
+        <bufferAttribute attach="attributes-color" count={colors.length / 3} args={[colors, 3]} />
       </bufferGeometry>
       <pointsMaterial
         size={0.05}
@@ -179,7 +179,7 @@ function AtmosphericFog() {
   return (
     <points ref={fogRef}>
       <bufferGeometry>
-        <bufferAttribute attach="attributes-position" count={particles.length / 3} array={particles} itemSize={3} />
+        <bufferAttribute attach="attributes-position" count={particles.length / 3} args={[particles, 3]} />
       </bufferGeometry>
       <pointsMaterial
         size={0.15}

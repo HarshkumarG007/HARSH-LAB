@@ -1,6 +1,12 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react'
 
-export type DesignVersion = 'v1-cyberpunk' | 'v2-premium' | 'v3-god-tier' | 'v4-evidence' | 'v5-precious-metals'
+export type DesignVersion =
+  | 'v1-cyberpunk'
+  | 'v2-premium'
+  | 'v3-god-tier'
+  | 'v4-evidence'
+  | 'v5-precious-metals'
+  | 'v7-nexus'
 
 interface VersionContextType {
   currentVersion: DesignVersion
@@ -14,34 +20,36 @@ interface VersionContextType {
 const VersionContext = createContext<VersionContextType | undefined>(undefined)
 
 const VERSION_NAMES: Record<DesignVersion, string> = {
-  'v1-cyberpunk': 'Matrix',
-  'v2-premium': 'Luxe',
-  'v3-god-tier': 'God Mode',
-  'v4-evidence': 'Evidence',
-  'v5-precious-metals': 'Haute Couture',
+  'v1-cyberpunk':        'Matrix',
+  'v2-premium':          'Luxe',
+  'v3-god-tier':         'God Mode',
+  'v4-evidence':         'Evidence',
+  'v5-precious-metals':  'Haute Couture',
+  'v7-nexus':            'NEXUS',
 }
 
 const VERSION_DESCRIPTIONS: Record<DesignVersion, string> = {
-  'v1-cyberpunk': 'Neon-drenched cyberpunk aesthetic with Matrix rain',
-  'v2-premium': 'Apple × Linear × Stripe minimalist luxury',
-  'v3-god-tier': 'Physics-based interactions with precious materials',
-  'v4-evidence': 'Radical transparency with commit analysis',
-  'v5-precious-metals': 'Gold, Platinum, Gemstones photorealistic materials',
+  'v1-cyberpunk':        'Neon-drenched cyberpunk aesthetic with Matrix rain',
+  'v2-premium':          'Apple × Linear × Stripe minimalist luxury',
+  'v3-god-tier':         'Physics-based interactions with precious materials',
+  'v4-evidence':         'Radical transparency with commit analysis',
+  'v5-precious-metals':  'Gold, Platinum, Gemstones photorealistic materials',
+  'v7-nexus':            '3D living universe — particle text, fluid sim, orbital credentials',
 }
 
 const VERSION_COLORS: Record<DesignVersion, string> = {
-  'v1-cyberpunk': '#00F3FF',
-  'v2-premium': '#6366F1',
-  'v3-god-tier': '#D4AF37',
-  'v4-evidence': '#10B981',
-  'v5-precious-metals': '#D4AF37',
+  'v1-cyberpunk':        '#00F3FF',
+  'v2-premium':          '#6366F1',
+  'v3-god-tier':         '#D4AF37',
+  'v4-evidence':         '#10B981',
+  'v5-precious-metals':  '#D4AF37',
+  'v7-nexus':            '#818CF8',
 }
 
 export function VersionProvider({ children }: { children: React.ReactNode }) {
-  const [currentVersion, setCurrentVersion] = useState<DesignVersion>('v5-precious-metals')
+  const [currentVersion, setCurrentVersion] = useState<DesignVersion>('v7-nexus')
   const [isTransitioning, setIsTransitioning] = useState(false)
 
-  // Load saved version on mount
   useEffect(() => {
     const saved = localStorage.getItem('portfolio-version') as DesignVersion
     if (saved && VERSION_NAMES[saved]) {
@@ -51,15 +59,10 @@ export function VersionProvider({ children }: { children: React.ReactNode }) {
 
   const setVersion = useCallback((version: DesignVersion) => {
     if (version === currentVersion) return
-    
     setIsTransitioning(true)
-    
-    // Small delay for transition animation
     setTimeout(() => {
       setCurrentVersion(version)
       localStorage.setItem('portfolio-version', version)
-      
-      // Remove transitioning state after change
       setTimeout(() => setIsTransitioning(false), 500)
     }, 300)
   }, [currentVersion])
@@ -82,8 +85,6 @@ export function VersionProvider({ children }: { children: React.ReactNode }) {
 
 export function useVersion() {
   const context = useContext(VersionContext)
-  if (!context) {
-    throw new Error('useVersion must be used within VersionProvider')
-  }
+  if (!context) throw new Error('useVersion must be used within VersionProvider')
   return context
 }
