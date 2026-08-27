@@ -1,5 +1,5 @@
 import { useVersion } from '../contexts/VersionContext'
-import { Suspense, lazy, useState, useEffect } from 'react'
+import { Suspense, lazy } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { AlertCircle } from 'lucide-react'
 
