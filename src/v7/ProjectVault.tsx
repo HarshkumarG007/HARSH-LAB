@@ -50,10 +50,11 @@ void main() {
 }
 `
 
-function HolographicCard({ project, position, index }: {
+function HolographicCard({ project, position, index, onSelect }: {
   project: typeof projects[0]
   position: [number, number, number]
   index: number
+  onSelect: (project: typeof projects[0]) => void
 }) {
   const groupRef  = useRef<THREE.Group>(null)
   const matRef    = useRef<THREE.ShaderMaterial>(null)
@@ -104,8 +105,18 @@ function HolographicCard({ project, position, index }: {
     <group
       ref={groupRef}
       position={position}
-      onPointerOver={() => setHovered(true)}
-      onPointerOut={() => setHovered(false)}
+      onPointerOver={() => {
+        setHovered(true)
+        document.body.style.cursor = 'pointer'
+      }}
+      onPointerOut={() => {
+        setHovered(false)
+        document.body.style.cursor = 'default'
+      }}
+      onClick={(e) => {
+        e.stopPropagation()
+        onSelect(project)
+      }}
     >
       {/* Card body — holographic glass */}
       <RoundedBox args={[2.8, 1.8, 0.04]} radius={0.06}>
@@ -186,7 +197,7 @@ function HolographicCard({ project, position, index }: {
   )
 }
 
-export default function ProjectVault() {
+export default function ProjectVault({ onProjectSelect }: { onProjectSelect?: (project: typeof projects[0]) => void }) {
   const featuredProjects = projects.slice(0, 6)
 
   // 3D grid arrangement — 3 columns, 2 rows
@@ -203,6 +214,7 @@ export default function ProjectVault() {
           project={project}
           position={positions[i]}
           index={i}
+          onSelect={(p) => onProjectSelect?.(p)}
         />
       ))}
     </group>

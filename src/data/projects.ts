@@ -17,6 +17,11 @@ export interface Project {
   metrics?: { label: string; value: string }[]
   testQuestions?: string[]
   credentials: string[]
+  architecture?: {
+    l1: string
+    l2: string
+    l3: string
+  }
 }
 
 export const projects: Project[] = [
@@ -46,6 +51,11 @@ export const projects: Project[] = [
       'How does Tauri IPC maintain security boundaries?',
     ],
     credentials: ['ibm-nlp', 'ibm-ai-customer', 'google-ux'],
+    architecture: {
+      l1: 'Local-First Desktop Application',
+      l2: 'React/Vite Frontend → Tauri IPC → Rust Backend → SQLite',
+      l3: 'Implements AES-256 encryption at rest, strict IPC boundary validation, and a quantized local LLM for offline processing.',
+    },
   },
   {
     id: 'omniscient',
@@ -72,6 +82,11 @@ export const projects: Project[] = [
       'Explain retrieval vs ranking in your architecture.',
     ],
     credentials: ['google-cybersecurity', 'ibm-nlp'],
+    architecture: {
+      l1: 'Distributed Search Infrastructure',
+      l2: 'FastAPI → Kafka Queue → Workers → Elasticsearch (BM25) + Qdrant (Vectors)',
+      l3: 'OAuth2 permission boundaries enforced at the query level using post-filtering and tenant ID indexing.',
+    },
   },
   {
     id: 'mnemosyne',
@@ -98,6 +113,11 @@ export const projects: Project[] = [
       'Explain chain-of-custody preservation.',
     ],
     credentials: ['ibm-unsupervised', 'ibm-nlp'],
+    architecture: {
+      l1: 'Event-Driven Knowledge Graph',
+      l2: 'Data Ingestion (Python) → Agent Network → Neo4j Graph Database',
+      l3: 'Uses temporal PageRank to identify threat clusters; enforces strict chain-of-custody cryptographic hashing on all artifacts.',
+    },
   },
   {
     id: 'leadguard',
@@ -124,6 +144,11 @@ export const projects: Project[] = [
       'What does calibration tell you that ROC-AUC does not?',
     ],
     credentials: ['google-advanced-analytics', 'ibm-supervised'],
+    architecture: {
+      l1: 'ML Training & Inference Pipeline',
+      l2: 'Raw Data → Scikit-learn Pipeline → XGBoost → MLflow Tracking → Docker API',
+      l3: 'Focuses on uncertainty calibration (Platt scaling) and fairness constraints, rejecting uncalibrated probability scores.',
+    },
   },
 
   // TIER B: Moderate Historical Evidence
@@ -152,6 +177,11 @@ export const projects: Project[] = [
       'Explain cold-start handling.',
     ],
     credentials: ['google-advanced-analytics', 'ibm-supervised'],
+    architecture: {
+      l1: 'Two-Stage Recommender System',
+      l2: 'User/Item Embeddings → FAISS (Retrieval) → XGBoost (Ranking)',
+      l3: 'PyTorch-based two-tower model with hard negative mining. Final ranking uses Maximal Marginal Relevance (MMR) for diversity.',
+    },
   },
   {
     id: 'project-aether',
@@ -185,12 +215,17 @@ export const projects: Project[] = [
     category: 'GenAI',
     year: '2026',
     github: 'https://github.com/HarshkumarG007/PROMETHEUS',
-    featured: false,
+    featured: true,
     testQuestions: [
       'How does tool registry validate actions?',
       'Explain confirmation queue security.',
     ],
     credentials: ['ibm-genai', 'google-prompting', 'ibm-ai-customer'],
+    architecture: {
+      l1: 'Agentic Tool-Calling System',
+      l2: 'User Input → LangGraph Orchestrator → LLM Node → Tool Executor → Confirmation Queue',
+      l3: 'Implements human-in-the-loop (HITL) interrupt states in LangGraph to prevent destructive tool calls (rm, drop db). Tools are strictly typed using Pydantic.',
+    },
   },
   {
     id: 'cogniguard',

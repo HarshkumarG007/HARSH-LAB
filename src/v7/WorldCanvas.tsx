@@ -25,8 +25,10 @@ function SceneLighting() {
 
 import { MotionValue } from 'framer-motion'
 
+import { Project } from '../data/projects'
+
 // Section groups positioned in 3D world space
-function WorldScene({ mouseX, mouseY }: { mouseX: MotionValue<number>; mouseY: MotionValue<number> }) {
+function WorldScene({ mouseX, mouseY, onProjectSelect }: { mouseX: MotionValue<number>; mouseY: MotionValue<number>; onProjectSelect?: (project: Project) => void }) {
   return (
     <>
       <SceneLighting />
@@ -52,7 +54,7 @@ function WorldScene({ mouseX, mouseY }: { mouseX: MotionValue<number>; mouseY: M
 
       {/* PROJECTS section: at same depth as start, offset */}
       <group position={[0, 0, -5]}>
-        <ProjectVault />
+        <ProjectVault onProjectSelect={onProjectSelect} />
       </group>
 
       {/* CREDENTIALS section: elevated */}
@@ -72,9 +74,10 @@ interface WorldCanvasProps {
   mouseX: MotionValue<number>
   mouseY: MotionValue<number>
   isMobile: boolean
+  onProjectSelect?: (project: Project) => void
 }
 
-export default function WorldCanvas({ mouseX, mouseY, isMobile }: WorldCanvasProps) {
+export default function WorldCanvas({ mouseX, mouseY, isMobile, onProjectSelect }: WorldCanvasProps) {
   const scrollCamRef = useRef(null)
 
   // Pause rendering when tab is backgrounded — saves CPU/GPU for nothing the user can see
@@ -107,7 +110,7 @@ export default function WorldCanvas({ mouseX, mouseY, isMobile }: WorldCanvasPro
       }}
     >
       <Suspense fallback={null}>
-        <WorldScene mouseX={mouseX} mouseY={mouseY} />
+        <WorldScene mouseX={mouseX} mouseY={mouseY} onProjectSelect={onProjectSelect} />
         <ScrollCamera ref={scrollCamRef} />
         {!isMobile && <PostProcessing />}
         {/* Removed CDN Environment preset to prevent fetch errors; using SceneLighting instead */}

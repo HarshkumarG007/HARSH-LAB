@@ -1,10 +1,100 @@
 import { useState, useEffect } from 'react'
-import { motion, useMotionValue, useReducedMotion } from 'framer-motion'
+import { motion, AnimatePresence, useMotionValue, useReducedMotion } from 'framer-motion'
 import WorldCanvas from '../v7/WorldCanvas'
 import LoadingScreen from '../components/LoadingScreen'
+import ProjectModal from '../components/ProjectModal'
 import { credentialStats, credentials } from '../data/credentials'
-import { projects } from '../data/projects'
+import { projects, Project } from '../data/projects'
 import { repositoryEvidence } from '../data/evidence'
+
+// ─── Mobile Overlays ──────────────────────────────────────────────────────────
+
+function MobileProjectCard({ project }: { project: Project }) {
+  const [expanded, setExpanded] = useState(false)
+
+  return (
+    <div className="rounded-xl border border-white/8 bg-white/2 overflow-hidden transition-colors hover:border-indigo-500/40">
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="w-full text-left p-4 focus:outline-none"
+        aria-expanded={expanded}
+      >
+        <div className="flex items-start justify-between gap-3 mb-2">
+          <span className="font-bold text-white text-sm">{project.title}</span>
+          <span className={`text-[10px] font-mono px-2 py-0.5 rounded shrink-0 ${
+            project.tier === 'A' ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' :
+            project.tier === 'B' ? 'bg-indigo-950 text-indigo-400 border border-indigo-800' :
+            'bg-amber-950 text-amber-400 border border-amber-800'
+          }`}>
+            Tier {project.tier}
+          </span>
+        </div>
+        <p className="text-white/40 text-xs mb-3 leading-relaxed">{project.tagline}</p>
+        <div className="flex items-center gap-4 text-[10px] font-mono text-white/30">
+          <span>{project.commits} commits</span>
+          <span className="text-white/20">·</span>
+          <span>{project.category}</span>
+          <span className="text-white/20">·</span>
+          <span>{project.year}</span>
+        </div>
+      </button>
+
+      {/* Expanded State */}
+      <AnimatePresence>
+        {expanded && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className="border-t border-white/5 bg-black/20"
+          >
+            <div className="p-4 space-y-4">
+              {project.architecture ? (
+                <div className="space-y-4">
+                  <div>
+                    <span className="text-indigo-400 text-[10px] font-mono uppercase">L1: High Level</span>
+                    <p className="text-white/60 text-xs mt-1">{project.architecture.l1}</p>
+                  </div>
+                  <div>
+                    <span className="text-emerald-400 text-[10px] font-mono uppercase">L2: Data Flow</span>
+                    <p className="text-white/60 text-xs mt-1">{project.architecture.l2}</p>
+                  </div>
+                  <div>
+                    <span className="text-amber-400 text-[10px] font-mono uppercase">L3: Implementation</span>
+                    <p className="text-white/60 text-xs mt-1">{project.architecture.l3}</p>
+                  </div>
+                </div>
+              ) : (
+                <p className="text-white/40 text-xs font-mono">Architecture blueprint unavailable.</p>
+              )}
+              
+              <div className="pt-4 flex gap-2">
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 text-center py-2 bg-indigo-600 hover:bg-indigo-500 rounded text-xs font-medium text-white transition-colors"
+                >
+                  View Source
+                </a>
+                {project.demo && (
+                  <a
+                    href={project.demo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 text-center py-2 border border-white/10 hover:bg-white/5 rounded text-xs font-medium text-white transition-colors"
+                  >
+                    Live Demo
+                  </a>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
 
 // ─── Desktop overlays ─────────────────────────────────────────────────────────
 
@@ -194,33 +284,7 @@ function NexusLite() {
           <h2 className="text-2xl font-bold mb-8 text-white">Systems, not demos.</h2>
           <div className="space-y-4">
             {featuredProjects.map(project => (
-              <a
-                key={project.id}
-                href={project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block p-4 rounded-xl border border-white/8 hover:border-indigo-500/40 bg-white/2 hover:bg-indigo-950/30 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-400"
-                aria-label={`View ${project.title} on GitHub`}
-              >
-                <div className="flex items-start justify-between gap-3 mb-2">
-                  <span className="font-bold text-white text-sm">{project.title}</span>
-                  <span className={`text-[10px] font-mono px-2 py-0.5 rounded shrink-0 ${
-                    project.tier === 'A' ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' :
-                    project.tier === 'B' ? 'bg-indigo-950 text-indigo-400 border border-indigo-800' :
-                    'bg-amber-950 text-amber-400 border border-amber-800'
-                  }`}>
-                    Tier {project.tier}
-                  </span>
-                </div>
-                <p className="text-white/40 text-xs mb-3 leading-relaxed">{project.tagline}</p>
-                <div className="flex items-center gap-4 text-[10px] font-mono text-white/30">
-                  <span>{project.commits} commits</span>
-                  <span className="text-white/20">·</span>
-                  <span>{project.category}</span>
-                  <span className="text-white/20">·</span>
-                  <span>{project.year}</span>
-                </div>
-              </a>
+              <MobileProjectCard key={project.id} project={project} />
             ))}
           </div>
         </section>
@@ -312,9 +376,8 @@ function NexusLite() {
   )
 }
 
-// ─── Root ─────────────────────────────────────────────────────────────────────
-
 export default function NexusVersion() {
+  const [activeProject, setActiveProject] = useState<Project | null>(null)
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
   const scrollProgress = useMotionValue(0)
@@ -369,9 +432,10 @@ export default function NexusVersion() {
       </a>
 
       <LoadingScreen />
+      <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} />
 
       {/* Fixed 3D Canvas — the world */}
-      <WorldCanvas mouseX={mouseX} mouseY={mouseY} isMobile={false} />
+      <WorldCanvas mouseX={mouseX} mouseY={mouseY} isMobile={false} onProjectSelect={setActiveProject} />
 
       {/* Scrollable HTML overlay */}
       <div id="main-content" className="relative z-10" style={{ pointerEvents: 'none' }}>
