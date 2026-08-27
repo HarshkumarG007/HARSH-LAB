@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion'
 import RevealText from './RevealText'
 import MagneticButton from './MagneticButton'
+import { credentialStats } from '../data/credentials'
 
 export default function GodHero() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -136,7 +137,7 @@ export default function GodHero() {
           transition={{ duration: 0.8, delay: 1.2 }}
           className="text-text-tertiary text-lg max-w-2xl mx-auto mb-12 leading-relaxed"
         >
-          303 commits across 12 repositories. 20 verified credentials.
+          303 commits across 12 repositories. {credentialStats.total} verified credentials.
           IBM SkillsBuild Faculty. Building intelligent systems with
           transparency and craft.
         </motion.p>

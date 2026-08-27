@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
-import { MessageSquare, HelpCircle, CheckCircle } from 'lucide-react'
+import { MessageSquare, HelpCircle, CheckCircle, CheckCircle2 } from 'lucide-react'
 import { projects } from '../data/projects'
+import { credentialStats } from '../data/credentials'
 import SectionLabel from '../components/ui/SectionLabel'
 
 export default function InterviewPrep() {
@@ -113,8 +114,8 @@ export default function InterviewPrep() {
                   <span>Netflix Recsys: Clean evaluation pipeline</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-matrix-green mt-0.5">■</span>
-                  <span>20 verified credentials (Google + IBM)</span>
+                  <CheckCircle2 size={16} className="text-[#00FF41] mt-0.5" />
+                  <span>{credentialStats.total} verified credentials (Google + IBM)</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-matrix-green mt-0.5">■</span>

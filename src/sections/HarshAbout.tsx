@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Terminal, Shield, Brain, GraduationCap } from 'lucide-react'
+import { credentialStats } from '../data/credentials'
 
 const phases = [
   {
@@ -69,7 +70,7 @@ export default function HarshAbout() {
           </h2>
           <p className="text-secondary text-lg max-w-3xl font-mono text-sm">
             <span className="text-neon-cyan">&gt;</span> A documented progression from IT foundations to AI/ML engineering,
-            supported by 20 verified credentials, 12 implementation repositories,
+            supported by {credentialStats.total} verified credentials, 12 implementation repositories,
             and IBM-authorized education delivery.
           </p>
         </motion.div>

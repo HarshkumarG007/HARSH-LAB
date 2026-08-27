@@ -4,9 +4,6 @@ import { Mail, Github, Linkedin, ExternalLink } from 'lucide-react'
 import Gemstone from '../components/Gemstone'
 import ContactFormModal from '../components/ContactFormModal'
 
-// Email assembled at runtime to prevent scraper harvesting
-const getEmail = () => ['hrslsha007', 'gmail', 'com'].join('@').replace('@gmail@', '@gmail.')
-
 export default function PremiumContact() {
   const [isContactFormOpen, setIsContactFormOpen] = useState(false)
 

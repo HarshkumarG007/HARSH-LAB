@@ -10,7 +10,7 @@ This is not a standard portfolio. It is an engineering artifact designed to prov
 
 The core data model is located in `src/data/`:
 - **`evidence.ts`**: Contains the audit snapshot (303 commits across 12 repositories as of Aug 2026), replacing subjective skill bars with qualitative evidence strength tiers (`VERY STRONG`, `STRONG`, `MODERATE`, `LIMITED`).
-- **`credentials.ts`**: 18 verified credentials from Google, IBM, and others. No unverified or "in-progress" items are included.
+- **`credentials.ts`**: 19 verified credentials from Google, IBM, and others. No unverified or "in-progress" items are included.
 - **`projects.ts`**: Production implementations and architectures categorized by focus area.
 
 ## Architecture

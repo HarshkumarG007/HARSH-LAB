@@ -139,7 +139,7 @@ export default function CredentialConstellation() {
       <OrbitalRing radius={5} tilt={[-0.2, 0.1, 0.2]}     color="#0062FF" />
       <OrbitalRing radius={7} tilt={[0.1, 0.3, -0.1]}     color="#818cf8" />
 
-      {/* 20 credential orbs in orbit */}
+      {/* Dynamic credential orbs in orbit */}
       {orbs.map((orb, i) => (
         <CredentialOrb key={i} {...orb} />
       ))}

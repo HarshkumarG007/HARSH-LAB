@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion'
 import { ArrowRight, Sparkles } from 'lucide-react'
+import { credentialStats } from '../data/credentials'
 
 export default function PremiumHero() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -96,7 +97,7 @@ export default function PremiumHero() {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="text-text-tertiary text-base md:text-lg max-w-2xl mx-auto mb-12 leading-relaxed"
         >
-          303 commits across 12 repositories. 20 verified credentials.
+          303 commits across 12 repositories. {credentialStats.total} verified credentials.
           IBM SkillsBuild Faculty. Building intelligent systems with
           transparency and craft.
         </motion.p>
