@@ -1,0 +1,90 @@
+/* ============================================
+   PERFORMANCE OPTIMIZATIONS
+   60fps Guaranteed
+   ============================================ */
+
+/* GPU Acceleration - Use sparingly */
+.gpu-layer {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Contain paint for heavy animations */
+.contain-paint {
+  contain: paint layout;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Optimized scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Throttle will-change - only on active elements */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+/* Remove will-change when not animating */
+.will-change-transform:not(:hover):not(.animating) {
+  will-change: auto;
+}
+
+/* Optimized box-shadow transitions */
+.shadow-gpu {
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  will-change: box-shadow, transform;
+}
+
+/* Prevent layout shifts */
+.min-h-screen-safe {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* Image optimization */
+img {
+  content-visibility: auto;
+}
+
+/* Font display swap */
+@font-face {
+  font-family: 'Inter';
+  font-display: swap;
+}
+
+/* Reduce repaints */
+.fixed-gpu {
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
