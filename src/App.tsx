@@ -1,11 +1,11 @@
-import CyberpunkVersion from './versions/CyberpunkVersion'
+import PremiumVersion from './versions/PremiumVersion'
 
 import './styles/globals.css'
 
 function App() {
   return (
     <div className="relative">
-      <CyberpunkVersion />
+      <PremiumVersion />
     </div>
   )
 }
