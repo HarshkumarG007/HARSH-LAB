@@ -1,0 +1,597 @@
+/* ============================================
+   GOD-TIER CSS ARCHITECTURE
+   Physics-based, Context-aware, Luxurious
+   ============================================ */
+
+/* CSS Custom Properties for Dynamic Values */
+:root {
+  /* Easing Functions - Physics-based */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-elastic: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-dramatic: cubic-bezier(0.87, 0, 0.13, 1);
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  
+  /* Duration Scale - Rhythmic */
+  --duration-instant: 0ms;
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+  --duration-dramatic: 800ms;
+  --duration-cinematic: 1200ms;
+  
+  /* Spatial Scale - 8px Grid */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  --space-4xl: 96px;
+  
+  /* 3D Perspective */
+  --perspective-near: 500px;
+  --perspective-normal: 1000px;
+  --perspective-far: 2000px;
+  
+  /* Shadow Depth - Realistic Lighting */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-glow: 0 0 40px -10px var(--glow-color, rgba(99, 102, 241, 0.3));
+  
+  /* Glass Refraction */
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-highlight: rgba(255, 255, 255, 0.05);
+  --glass-shadow: rgba(0, 0, 0, 0.3);
+  
+  /* Scroll Progress */
+  --scroll-progress: 0;
+  --scroll-velocity: 0;
+}
+
+/* ============================================
+   SCROLL-ENGINE - Scroll-Linked Animations
+   ============================================ */
+
+@supports (animation-timeline: scroll()) {
+  .scroll-reveal {
+    animation: fadeInUp linear both;
+    animation-timeline: view();
+    animation-range: entry 10% cover 30%;
+  }
+  
+  .scroll-parallax-slow {
+    animation: parallaxSlow linear;
+    animation-timeline: scroll(root);
+  }
+  
+  .scroll-parallax-fast {
+    animation: parallaxFast linear;
+    animation-timeline: scroll(root);
+  }
+  
+  .scroll-scale {
+    animation: scaleIn linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 50%;
+  }
+  
+  .scroll-rotate {
+    animation: rotateIn linear;
+    animation-timeline: scroll(root);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(60px) scale(0.95);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes parallaxSlow {
+  to { transform: translateY(-100px); }
+}
+
+@keyframes parallaxFast {
+  to { transform: translateY(-300px); }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes rotateIn {
+  to { transform: rotate(360deg); }
+}
+
+/* ============================================
+   3D CARD SYSTEM - Realistic Depth
+   ============================================ */
+
+.card-3d {
+  transform-style: preserve-3d;
+  transition: transform var(--duration-slow) var(--ease-out-expo);
+}
+
+.card-3d:hover {
+  transform: 
+    translateY(-8px)
+    translateZ(20px)
+    rotateX(2deg)
+    rotateY(-2deg);
+}
+
+.card-3d-inner {
+  transform: translateZ(30px);
+}
+
+.card-3d-shadow {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.2) 100%
+  );
+  transform: translateZ(-1px);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* Realistic Glass with Refraction */
+.glass-realistic {
+  position: relative;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  box-shadow: 
+    inset 0 1px 0 var(--glass-highlight),
+    0 25px 50px -12px var(--glass-shadow);
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.glass-realistic::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ============================================
+   MAGNETIC INTERACTIONS - Physics-based
+   ============================================ */
+
+.magnetic {
+  transition: transform var(--duration-fast) var(--ease-out-quart);
+  will-change: transform;
+}
+
+.magnetic-active {
+  transition: transform var(--duration-normal) var(--ease-spring);
+}
+
+/* ============================================
+   TEXT REVEAL - Cinematic Typography
+   ============================================ */
+
+.text-reveal {
+  overflow: hidden;
+}
+
+.text-reveal-inner {
+  display: inline-block;
+  transform: translateY(100%) rotate(5deg);
+  opacity: 0;
+  transition: 
+    transform var(--duration-dramatic) var(--ease-out-expo),
+    opacity var(--duration-slow) var(--ease-smooth);
+}
+
+.text-reveal.revealed .text-reveal-inner {
+  transform: translateY(0) rotate(0);
+  opacity: 1;
+}
+
+/* Character-by-character reveal */
+.text-reveal-char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: charReveal var(--duration-normal) var(--ease-out-expo) forwards;
+}
+
+@keyframes charReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   LIQUID BUTTON - Organic Feel
+   ============================================ */
+
+.btn-liquid {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.btn-liquid::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translate(-50%, -50%);
+  transition: 
+    width var(--duration-slow) var(--ease-out-expo),
+    height var(--duration-slow) var(--ease-out-expo);
+  z-index: -1;
+}
+
+.btn-liquid:hover::before {
+  width: 300%;
+  height: 300%;
+}
+
+/* Ripple Effect */
+.btn-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-ripple .ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(0);
+  animation: rippleEffect 0.6s linear;
+  pointer-events: none;
+}
+
+@keyframes rippleEffect {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* ============================================
+   CURSOR SYSTEM - Context-aware
+   ============================================ */
+
+.cursor-luxe {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(99, 102, 241, 0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transition: 
+    transform 0.15s var(--ease-out-quart),
+    width 0.3s var(--ease-out-expo),
+    height 0.3s var(--ease-out-expo),
+    border-color 0.3s;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference;
+}
+
+.cursor-luxe.hovering {
+  width: 60px;
+  height: 60px;
+  border-color: rgba(99, 102, 241, 0.8);
+  background: rgba(99, 102, 241, 0.1);
+}
+
+.cursor-luxe-dot {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  background: rgba(99, 102, 241, 1);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+}
+
+/* ============================================
+   GRADIENT MESH - Living Backgrounds
+   ============================================ */
+
+.gradient-mesh {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.gradient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.5;
+  animation: orbFloat 20s ease-in-out infinite;
+}
+
+.gradient-orb:nth-child(1) {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.4) 0%, transparent 70%);
+  top: -20%;
+  left: -10%;
+  animation-delay: 0s;
+}
+
+.gradient-orb:nth-child(2) {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.3) 0%, transparent 70%);
+  bottom: -10%;
+  right: -10%;
+  animation-delay: -5s;
+}
+
+.gradient-orb:nth-child(3) {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.2) 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation-delay: -10s;
+}
+
+@keyframes orbFloat {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(30px, -30px) scale(1.05);
+  }
+  50% {
+    transform: translate(-20px, 20px) scale(0.95);
+  }
+  75% {
+    transform: translate(20px, 30px) scale(1.02);
+  }
+}
+
+/* ============================================
+   SCROLLBAR - Luxury Details
+   ============================================ */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(99, 102, 241, 0.5), rgba(168, 85, 247, 0.5));
+  border-radius: 3px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(99, 102, 241, 0.8), rgba(168, 85, 247, 0.8));
+  background-clip: content-box;
+}
+
+/* Smooth Scroll with Momentum */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+}
+
+/* ============================================
+   IMAGE TREATMENT - Cinematic
+   ============================================ */
+
+.img-cinematic {
+  position: relative;
+  overflow: hidden;
+}
+
+.img-cinematic::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(11, 12, 15, 0.3) 100%
+  );
+  pointer-events: none;
+}
+
+.img-cinematic img {
+  transition: transform var(--duration-slow) var(--ease-out-expo);
+}
+
+.img-cinematic:hover img {
+  transform: scale(1.05);
+}
+
+/* ============================================
+   LOADING STATES - Satisfying
+   ============================================ */
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+@keyframes skeletonShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ============================================
+   FOCUS STATES - Accessible Luxury
+   ============================================ */
+
+:focus-visible {
+  outline: none;
+  box-shadow: 
+    0 0 0 2px var(--bg-primary),
+    0 0 0 4px rgba(99, 102, 241, 0.5);
+  border-radius: 8px;
+}
+
+/* ============================================
+   MICRO-INTERACTIONS - Delightful Details
+   ============================================ */
+
+/* Link underline animation */
+.link-luxe {
+  position: relative;
+  display: inline-block;
+}
+
+.link-luxe::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--duration-normal) var(--ease-out-expo);
+}
+
+.link-luxe:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Badge hover lift */
+.badge-luxe {
+  transition: 
+    transform var(--duration-fast) var(--ease-out-quart),
+    box-shadow var(--duration-normal) var(--ease-smooth);
+}
+
+.badge-luxe:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.3);
+}
+
+/* Card shine effect */
+.card-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-shine::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  transform: rotate(30deg) translateX(-100%);
+  transition: transform 0.8s;
+}
+
+.card-shine:hover::before {
+  transform: rotate(30deg) translateX(100%);
+}
+
+/* ============================================
+   REDUCED MOTION - Respect User Preference
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .gradient-orb {
+    animation: none;
+  }
+}
+
+/* ============================================
+   PERFORMANCE - GPU Acceleration
+   ============================================ */
+
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* Contain paint for complex animations */
+.contain-paint {
+  contain: paint;
+}
