@@ -127,9 +127,9 @@ function HeroOverlay({ reduced }: { reduced: boolean }) {
 }
 
 function SectionOverlay({
-  id, title, subtitle, align = 'left', reduced,
+  id, title, subtitle, align = 'left', reduced, children
 }: {
-  id: string; title: string; subtitle: string; align?: 'left' | 'right' | 'center'; reduced: boolean
+  id: string; title: string; subtitle: string; align?: 'left' | 'right' | 'center'; reduced: boolean; children?: React.ReactNode
 }) {
   const alignClass = align === 'right' ? 'items-end text-right' :
                      align === 'center' ? 'items-center text-center' : 'items-start text-left'
@@ -156,6 +156,7 @@ function SectionOverlay({
         >
           {title}
         </h2>
+        {children}
       </motion.div>
     </section>
   )
@@ -477,7 +478,21 @@ export default function NexusVersion() {
           subtitle="Project Vault"
           align="right"
           reduced={prefersReduced}
-        />
+        >
+          {/* Accessible Semantic Layer for Screen Readers / Keyboard Users */}
+          <ul className="sr-only focus-within:not-sr-only focus-within:absolute focus-within:bg-slate-900 focus-within:p-4 focus-within:rounded-xl focus-within:z-50 focus-within:w-80 focus-within:right-0">
+            {projects.slice(0, 6).map((project) => (
+              <li key={project.id} className="mb-2">
+                <button
+                  onClick={() => setActiveProject(project)}
+                  className="w-full text-left text-white focus:outline-none focus:ring-2 focus:ring-indigo-400 p-2 rounded pointer-events-auto"
+                >
+                  <span className="font-bold">{project.title}</span> - {project.tagline}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </SectionOverlay>
 
         {/* Data-driven credential count — never hardcoded */}
         <SectionOverlay

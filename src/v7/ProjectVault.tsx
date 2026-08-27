@@ -152,6 +152,7 @@ function HolographicCard({ project, position, index, onSelect }: {
         center
       >
         <div
+          aria-hidden="true"
           style={{
             fontFamily: 'Inter, sans-serif',
             color: '#e2e8f0',
