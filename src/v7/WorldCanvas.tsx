@@ -1,6 +1,6 @@
 import { useRef, Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
-import { Environment, Stars } from '@react-three/drei'
+import { Stars } from '@react-three/drei'
 import AuroraBackground       from './AuroraBackground'
 import NeuralGalaxy           from './NeuralGalaxy'
 import FluidBackground        from './FluidBackground'
