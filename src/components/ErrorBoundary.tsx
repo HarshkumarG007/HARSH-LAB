@@ -37,19 +37,23 @@ export class ErrorBoundary extends Component<Props, State> {
               <h2 className="text-2xl font-bold">Something went wrong</h2>
             </div>
             
-            <div className="mb-6">
-              <h3 className="text-lg font-semibold text-white mb-2">Error:</h3>
-              <pre className="bg-slate-950 p-4 rounded-lg text-red-300 text-sm overflow-x-auto whitespace-pre-wrap">
-                {this.state.error?.toString()}
-              </pre>
-            </div>
-            
-            <div className="mb-8">
-              <h3 className="text-lg font-semibold text-white mb-2">Component Stack:</h3>
-              <pre className="bg-slate-950 p-4 rounded-lg text-slate-300 text-sm overflow-x-auto whitespace-pre-wrap">
-                {this.state.errorInfo?.componentStack}
-              </pre>
-            </div>
+            {import.meta.env.DEV && (
+              <>
+                <div className="mb-6">
+                  <h3 className="text-lg font-semibold text-white mb-2">Error:</h3>
+                  <pre className="bg-slate-950 p-4 rounded-lg text-red-300 text-sm overflow-x-auto whitespace-pre-wrap">
+                    {this.state.error?.toString()}
+                  </pre>
+                </div>
+                
+                <div className="mb-8">
+                  <h3 className="text-lg font-semibold text-white mb-2">Component Stack:</h3>
+                  <pre className="bg-slate-950 p-4 rounded-lg text-slate-300 text-sm overflow-x-auto whitespace-pre-wrap">
+                    {this.state.errorInfo?.componentStack}
+                  </pre>
+                </div>
+              </>
+            )}
             
             <button
               onClick={() => window.location.reload()}
