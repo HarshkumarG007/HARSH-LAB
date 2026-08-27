@@ -1,5 +1,6 @@
 import { EffectComposer, Bloom, ChromaticAberration, Noise, Vignette } from '@react-three/postprocessing'
 import { BlendFunction } from 'postprocessing'
+import * as THREE from 'three'
 
 export default function PostProcessing() {
   return (
@@ -15,7 +16,7 @@ export default function PostProcessing() {
       {/* Chromatic aberration — subtle RGB split for cinematic feel */}
       <ChromaticAberration
         blendFunction={BlendFunction.NORMAL}
-        offset={[0.0005, 0.0005]}
+        offset={new THREE.Vector2(0.0005, 0.0005) as any}
         radialModulation={true}
         modulationOffset={0.5}
       />
