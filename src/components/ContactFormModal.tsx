@@ -43,7 +43,8 @@ export default function ContactFormModal({ isOpen, onClose }: ContactFormModalPr
         onClose()
         setTimeout(() => setStatus('idle'), 300)
       }, 3000)
-    } catch (err) {
+    } catch (err: unknown) {
+      console.error(err)
       setStatus('error')
     }
   }

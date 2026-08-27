@@ -46,7 +46,7 @@ test.describe('HARSH LAB Portfolio', () => {
     await expect(v4Option).toBeVisible();
     await v4Option.click();
 
-    // Wait for the route/view to change - the "Raw Data" text is in the Evidence version
-    await expect(page.locator('text=Raw Data')).toBeVisible({ timeout: 10000 });
+    // Wait for the route/view to change - the "Radical Transparency" text is in the Evidence version
+    await expect(page.locator('text=Radical Transparency')).toBeVisible({ timeout: 10000 });
   });
 });

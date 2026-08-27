@@ -75,13 +75,14 @@ function OrbitalRing({ radius, tilt, color }: {
   )
 }
 
-export default function CredentialConstellation() {
-  const orbCount = credentialStats.total // derived from actual credential array
-  const orbitLayers = [
+const orbitLayers = [
     { radius: 3,   speed: 1.0,  color: '#4285F4', label: 'Google' },
     { radius: 5,   speed: 0.7,  color: '#0062FF', label: 'IBM' },
     { radius: 7,   speed: 0.4,  color: '#818cf8', label: 'Mixed' },
-  ]
+]
+
+export default function CredentialConstellation() {
+  const orbCount = credentialStats.total // derived from actual credential array
 
   const orbs = useMemo(() => {
     const result = []

@@ -145,7 +145,7 @@ function ConnectionLines() {
   useFrame(({ clock }) => {
     if (lineRef.current) {
       // Subtle pulse on opacity
-      ;(lineRef.current.material as THREE.LineBasicMaterial).opacity =
+      (lineRef.current.material as THREE.LineBasicMaterial).opacity =
         0.1 + Math.sin(clock.elapsedTime) * 0.05
     }
   })
