@@ -1,0 +1,715 @@
+/* ============================================
+   PRECIOUS METALS DESIGN SYSTEM
+   Photorealistic Materials with Contextual Usage
+   ============================================ */
+
+:root {
+  /* === GOLD FAMILY === */
+  --gold-base: #D4AF37;
+  --gold-light: #F4E8C1;
+  --gold-dark: #AA8C2C;
+  --gold-shine: #FFF8DC;
+  --gold-shadow: #8B7355;
+  
+  /* === PLATINUM FAMILY === */
+  --platinum-base: #E5E4E2;
+  --platinum-light: #F5F5F5;
+  --platinum-dark: #B8B8B8;
+  --platinum-shine: #FFFFFF;
+  --platinum-shadow: #909090;
+  
+  /* === ROSE GOLD FAMILY === */
+  --rose-gold-base: #B76E79;
+  --rose-gold-light: #E8B4B8;
+  --rose-gold-dark: #8B4A52;
+  --rose-gold-shine: #FFE4E1;
+  --rose-gold-shadow: #6B3A42;
+  
+  /* === SILVER FAMILY === */
+  --silver-base: #C0C0C0;
+  --silver-light: #E8E8E8;
+  --silver-dark: #808080;
+  --silver-shine: #FFFFFF;
+  --silver-shadow: #606060;
+  
+  /* === BRONZE FAMILY === */
+  --bronze-base: #CD7F32;
+  --bronze-light: #E6B88A;
+  --bronze-dark: #8B5A2B;
+  --bronze-shine: #FFE4C4;
+  --bronze-shadow: #5C3A1E;
+  
+  /* === BRASS FAMILY === */
+  --brass-base: #B5A642;
+  --brass-light: #D4C98A;
+  --brass-dark: #8B7D2B;
+  --brass-shine: #F0E68C;
+  --brass-shadow: #5A4F1A;
+  
+  /* === CHROME FAMILY === */
+  --chrome-base: #E8E8E8;
+  --chrome-light: #FFFFFF;
+  --chrome-dark: #A0A0A0;
+  --chrome-shine: #FFFFFF;
+  --chrome-reflection: #C0C0C0;
+  
+  /* === EMERALD FAMILY === */
+  --emerald-base: #50C878;
+  --emerald-light: #7FFFD4;
+  --emerald-dark: #2E8B57;
+  --emerald-shine: #98FF98;
+  --emerald-depth: #1A5F3F;
+  
+  /* === TITANIUM FAMILY === */
+  --titanium-base: #7A7A7A;
+  --titanium-light: #B0B0B0;
+  --titanium-dark: #4A4A4A;
+  --titanium-shine: #D0D0D0;
+  --titanium-texture: #606060;
+  
+  /* === DIAMOND === */
+  --diamond-base: #E0F7FA;
+  --diamond-light: #FFFFFF;
+  --diamond-sparkle: #FFFFFF;
+  --diamond-refraction: #B2EBF2;
+  
+  /* === RUBY === */
+  --ruby-base: #E0115F;
+  --ruby-deep: #8B0000;
+  --ruby-shine: #FF6B9D;
+  
+  /* === SAPPHIRE === */
+  --sapphire-base: #0F52BA;
+  --sapphire-deep: #000080;
+  --sapphire-shine: #4169E1;
+}
+
+/* ============================================
+   METALLIC GRADIENTS - Photorealistic
+   ============================================ */
+
+/* Polished Gold */
+.metallic-gold {
+  background: linear-gradient(
+    135deg,
+    var(--gold-dark) 0%,
+    var(--gold-base) 25%,
+    var(--gold-light) 45%,
+    var(--gold-shine) 50%,
+    var(--gold-light) 55%,
+    var(--gold-base) 75%,
+    var(--gold-dark) 100%
+  );
+  background-size: 200% 200%;
+  position: relative;
+}
+
+/* Brushed Gold */
+.metallic-gold-brushed {
+  background: 
+    repeating-linear-gradient(
+      90deg,
+      var(--gold-dark) 0px,
+      var(--gold-base) 1px,
+      var(--gold-light) 2px,
+      var(--gold-base) 3px,
+      var(--gold-dark) 4px
+    );
+  background-size: 4px 100%;
+}
+
+/* Mirror Gold */
+.metallic-gold-mirror {
+  background: linear-gradient(
+    180deg,
+    var(--gold-shine) 0%,
+    var(--gold-light) 30%,
+    var(--gold-base) 50%,
+    var(--gold-dark) 70%,
+    var(--gold-shadow) 100%
+  );
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2),
+    0 10px 40px -10px rgba(212, 175, 55, 0.5);
+}
+
+/* Polished Platinum */
+.metallic-platinum {
+  background: linear-gradient(
+    135deg,
+    var(--platinum-dark) 0%,
+    var(--platinum-base) 25%,
+    var(--platinum-light) 45%,
+    var(--platinum-shine) 50%,
+    var(--platinum-light) 55%,
+    var(--platinum-base) 75%,
+    var(--platinum-dark) 100%
+  );
+  background-size: 200% 200%;
+}
+
+/* Rose Gold */
+.metallic-rose-gold {
+  background: linear-gradient(
+    135deg,
+    var(--rose-gold-dark) 0%,
+    var(--rose-gold-base) 25%,
+    var(--rose-gold-light) 45%,
+    var(--rose-gold-shine) 50%,
+    var(--rose-gold-light) 55%,
+    var(--rose-gold-base) 75%,
+    var(--rose-gold-dark) 100%
+  );
+  background-size: 200% 200%;
+}
+
+/* Sterling Silver */
+.metallic-silver {
+  background: linear-gradient(
+    135deg,
+    var(--silver-dark) 0%,
+    var(--silver-base) 25%,
+    var(--silver-light) 45%,
+    var(--silver-shine) 50%,
+    var(--silver-light) 55%,
+    var(--silver-base) 75%,
+    var(--silver-dark) 100%
+  );
+  background-size: 200% 200%;
+}
+
+/* Antique Bronze */
+.metallic-bronze {
+  background: linear-gradient(
+    135deg,
+    var(--bronze-dark) 0%,
+    var(--bronze-base) 25%,
+    var(--bronze-light) 45%,
+    var(--bronze-shine) 50%,
+    var(--bronze-light) 55%,
+    var(--bronze-base) 75%,
+    var(--bronze-dark) 100%
+  );
+  background-size: 200% 200%;
+}
+
+/* Vintage Brass */
+.metallic-brass {
+  background: linear-gradient(
+    135deg,
+    var(--brass-dark) 0%,
+    var(--brass-base) 25%,
+    var(--brass-light) 45%,
+    var(--brass-shine) 50%,
+    var(--brass-light) 55%,
+    var(--brass-base) 75%,
+    var(--brass-dark) 100%
+  );
+  background-size: 200% 200%;
+}
+
+/* Mirror Chrome */
+.metallic-chrome {
+  background: linear-gradient(
+    180deg,
+    var(--chrome-shine) 0%,
+    var(--chrome-light) 20%,
+    var(--chrome-reflection) 40%,
+    var(--chrome-base) 50%,
+    var(--chrome-dark) 60%,
+    var(--chrome-base) 80%,
+    var(--chrome-light) 100%
+  );
+  box-shadow: 
+    inset 0 2px 4px rgba(255, 255, 255, 0.5),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+    0 4px 20px rgba(192, 192, 192, 0.3);
+}
+
+/* Cut Emerald */
+.metallic-emerald {
+  background: linear-gradient(
+    135deg,
+    var(--emerald-depth) 0%,
+    var(--emerald-dark) 25%,
+    var(--emerald-base) 45%,
+    var(--emerald-shine) 50%,
+    var(--emerald-base) 55%,
+    var(--emerald-dark) 75%,
+    var(--emerald-depth) 100%
+  );
+  background-size: 200% 200%;
+}
+
+/* Brushed Titanium */
+.metallic-titanium {
+  background: 
+    repeating-linear-gradient(
+      45deg,
+      var(--titanium-dark) 0px,
+      var(--titanium-base) 2px,
+      var(--titanium-light) 4px,
+      var(--titanium-base) 6px,
+      var(--titanium-dark) 8px
+    ),
+    linear-gradient(
+      135deg,
+      var(--titanium-dark),
+      var(--titanium-light)
+    );
+}
+
+/* ============================================
+   SHINE ANIMATION - Living Metals
+   ============================================ */
+
+@keyframes metallicShine {
+  0% {
+    background-position: 200% 200%;
+  }
+  100% {
+    background-position: -200% -200%;
+  }
+}
+
+@keyframes gemPulse {
+  0%, 100% {
+    filter: brightness(1) saturate(1);
+  }
+  50% {
+    filter: brightness(1.2) saturate(1.1);
+  }
+}
+
+@keyframes reflectionSweep {
+  0% {
+    transform: translateX(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(200%) rotate(45deg);
+  }
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1) rotate(180deg);
+  }
+}
+
+@keyframes shine-sweep {
+  0% { transform: translateX(-100%) rotate(12deg); }
+  100% { transform: translateX(300%) rotate(12deg); }
+}
+
+.animate-shine-sweep {
+  animation: shine-sweep 6s ease-in-out infinite;
+}
+
+@keyframes gem-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(180deg); }
+}
+
+.animate-gem-float {
+  animation: gem-float 6s ease-in-out infinite;
+}
+
+/* Apply shine to metals */
+.metallic-gold,
+.metallic-platinum,
+.metallic-rose-gold,
+.metallic-silver,
+.metallic-bronze,
+.metallic-brass,
+.metallic-emerald {
+  animation: metallicShine 8s ease-in-out infinite;
+}
+
+/* Gemstone pulse */
+.gem-emerald,
+.gem-ruby,
+.gem-sapphire,
+.gem-diamond {
+  animation: gemPulse 4s ease-in-out infinite;
+}
+
+/* ============================================
+   REFLECTION OVERLAY - Photorealistic
+   ============================================ */
+
+.reflection-overlay {
+  position: relative;
+  overflow: hidden;
+}
+
+.reflection-overlay::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 60%
+  );
+  animation: reflectionSweep 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* ============================================
+   MATERIAL TEXTURES - Tactile Feel
+   ============================================ */
+
+/* Hammered Metal */
+.texture-hammered {
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, transparent 2%),
+    radial-gradient(circle at 60% 70%, rgba(255,255,255,0.08) 0%, transparent 1.5%),
+    radial-gradient(circle at 40% 80%, rgba(255,255,255,0.12) 0%, transparent 2.5%),
+    radial-gradient(circle at 80% 20%, rgba(255,255,255,0.09) 0%, transparent 2%);
+  background-size: 100% 100%;
+}
+
+/* Brushed Metal Lines */
+.texture-brushed {
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 2px,
+    rgba(255, 255, 255, 0.03) 2px,
+    rgba(255, 255, 255, 0.03) 4px
+  );
+}
+
+/* Carbon Fiber */
+.texture-carbon {
+  background-image: 
+    repeating-linear-gradient(
+      45deg,
+      rgba(0, 0, 0, 0.1) 0px,
+      rgba(0, 0, 0, 0.1) 2px,
+      transparent 2px,
+      transparent 4px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(0, 0, 0, 0.1) 0px,
+      rgba(0, 0, 0, 0.1) 2px,
+      transparent 2px,
+      transparent 4px
+    );
+}
+
+/* Diamond Plate */
+.texture-diamond-plate {
+  background-image: 
+    linear-gradient(45deg, rgba(0,0,0,0.1) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(0,0,0,0.1) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(0,0,0,0.1) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(0,0,0,0.1) 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+/* ============================================
+   CONTEXTUAL USAGE - Right Material, Right Place
+   ============================================ */
+
+/* HERO: Platinum + Gold accents - Premium introduction */
+.material-hero {
+  background: linear-gradient(
+    180deg,
+    var(--platinum-dark) 0%,
+    var(--bg-primary) 50%,
+    var(--gold-dark) 100%
+  );
+  position: relative;
+}
+
+.material-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(229, 228, 226, 0.1) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+/* CREDENTIALS: Gold + Emerald - Achievement & Growth */
+.material-credentials {
+  background: linear-gradient(
+    135deg,
+    var(--bg-primary) 0%,
+    rgba(212, 175, 55, 0.05) 50%,
+    var(--bg-primary) 100%
+  );
+}
+
+.material-credentials .card-premium {
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.5),
+    0 0 30px -5px rgba(212, 175, 55, 0.1);
+}
+
+/* TIER A: Gold - Strongest evidence */
+.badge-tier-a {
+  background: linear-gradient(135deg, var(--gold-base), var(--gold-light));
+  color: var(--gold-shadow);
+  box-shadow: 
+    0 4px 15px rgba(212, 175, 55, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* TIER B: Silver - Moderate evidence */
+.badge-tier-b {
+  background: linear-gradient(135deg, var(--silver-base), var(--silver-light));
+  color: var(--silver-dark);
+  box-shadow: 
+    0 4px 15px rgba(192, 192, 192, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* TIER C: Bronze - Needs verification */
+.badge-tier-c {
+  background: linear-gradient(135deg, var(--bronze-base), var(--bronze-light));
+  color: var(--bronze-dark);
+  box-shadow: 
+    0 4px 15px rgba(205, 127, 50, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* PROJECTS: Rose Gold + Chrome - Innovation & Tech */
+.material-projects {
+  background: linear-gradient(
+    180deg,
+    var(--bg-primary) 0%,
+    rgba(183, 110, 121, 0.03) 50%,
+    var(--bg-primary) 100%
+  );
+}
+
+.material-projects .card-premium {
+  border: 1px solid rgba(183, 110, 121, 0.15);
+}
+
+.material-projects .card-premium:hover {
+  border-color: rgba(183, 110, 121, 0.3);
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.5),
+    0 0 40px -10px rgba(183, 110, 121, 0.15);
+}
+
+/* IBM: Chrome + Titanium - Tech precision */
+.material-ibm {
+  background: linear-gradient(135deg, var(--chrome-light), var(--titanium-base));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* GOOGLE: Multi-color gem - Diverse capabilities */
+.material-google {
+  background: linear-gradient(
+    90deg,
+    #4285F4,
+    #EA4335,
+    #FBBC05,
+    #34A853
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* CONTACT: Gold + Diamond - Premium connection */
+.material-contact {
+  background: linear-gradient(
+    135deg,
+    rgba(212, 175, 55, 0.1) 0%,
+    transparent 50%,
+    rgba(224, 247, 250, 0.05) 100%
+  );
+}
+
+/* FOOTER: Titanium + Brass - Solid foundation */
+.material-footer {
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(122, 122, 122, 0.1) 100%
+  );
+  border-top: 1px solid rgba(181, 166, 66, 0.1);
+}
+
+/* ============================================
+   INTERACTIVE STATES - Responsive Materials
+   ============================================ */
+
+/* Hover: Increase shine */
+.metallic-gold:hover,
+.metallic-platinum:hover,
+.metallic-rose-gold:hover {
+  animation-duration: 4s;
+  filter: brightness(1.1);
+}
+
+/* Active: Pressed metal */
+.metallic-gold:active,
+.metallic-platinum:active {
+  transform: translateY(1px);
+  box-shadow: 
+    inset 0 2px 4px rgba(0, 0, 0, 0.2),
+    0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Focus: Gem glow */
+.gem-emerald:focus-visible,
+.gem-ruby:focus-visible,
+.gem-sapphire:focus-visible {
+  box-shadow: 
+    0 0 0 2px var(--bg-primary),
+    0 0 0 4px var(--emerald-base),
+    0 0 20px var(--emerald-base);
+}
+
+/* ============================================
+   SPECIAL EFFECTS - Luxury Details
+   ============================================ */
+
+/* Diamond sparkle */
+.sparkle-diamond {
+  position: relative;
+}
+
+.sparkle-diamond::after {
+  content: '✦';
+  position: absolute;
+  color: var(--diamond-sparkle);
+  font-size: 0.8em;
+  animation: sparkle 2s ease-in-out infinite;
+  text-shadow: 0 0 10px var(--diamond-sparkle);
+}
+
+/* Gold leaf text */
+.text-gold-leaf {
+  background: 
+    linear-gradient(
+      45deg,
+      var(--gold-dark) 0%,
+      var(--gold-base) 25%,
+      var(--gold-light) 50%,
+      var(--gold-base) 75%,
+      var(--gold-dark) 100%
+    );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+  animation: metallicShine 4s linear infinite;
+  text-shadow: 
+    0 2px 4px rgba(212, 175, 55, 0.2),
+    0 4px 8px rgba(212, 175, 55, 0.1);
+}
+
+/* Platinum inscription */
+.text-platinum {
+  background: linear-gradient(
+    180deg,
+    var(--platinum-shine) 0%,
+    var(--platinum-light) 50%,
+    var(--platinum-base) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 
+    0 1px 2px rgba(255, 255, 255, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Engraved effect */
+.text-engraved {
+  color: var(--titanium-dark);
+  text-shadow: 
+    0 1px 0 rgba(255, 255, 255, 0.1),
+    0 -1px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* Embossed effect */
+.text-embossed {
+  color: var(--gold-light);
+  text-shadow: 
+    0 1px 0 rgba(255, 255, 255, 0.4),
+    0 2px 2px rgba(0, 0, 0, 0.2),
+    0 4px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================
+   SCROLL-DRIVEN MATERIAL TRANSITIONS
+   ============================================ */
+
+@supports (animation-timeline: scroll()) {
+  .material-reveal-gold {
+    animation: revealGold linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 30%;
+  }
+  
+  @keyframes revealGold {
+    from {
+      opacity: 0;
+      transform: translateY(50px) scale(0.95);
+      filter: brightness(0.5) sepia(1);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: brightness(1) sepia(0);
+    }
+  }
+  
+  .material-parallax-platinum {
+    animation: parallaxPlatinum linear;
+    animation-timeline: scroll(root);
+  }
+  
+  @keyframes parallaxPlatinum {
+    to {
+      background-position: 0% 100%;
+    }
+  }
+}
+
+/* ============================================
+   CURSOR MATERIALS - Contextual Pointer
+   ============================================ */
+
+.cursor-gold {
+  cursor: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%23D4AF37' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='4' fill='%23D4AF37'/%3E%3C/svg%3E") 16 16, auto;
+}
+
+.cursor-platinum {
+  cursor: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%23E5E4E2' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='4' fill='%23E5E4E2'/%3E%3C/svg%3E") 16 16, auto;
+}
+
+/* ============================================
+   PRINT/PDF OPTIMIZATION
+   ============================================ */
+
+@media print {
+  .metallic-gold,
+  .metallic-platinum,
+  .metallic-rose-gold {
+    background: none !important;
+    -webkit-text-fill-color: initial !important;
+    color: #333 !important;
+    box-shadow: none !important;
+  }
+}

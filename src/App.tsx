@@ -1,11 +1,12 @@
-import EvidenceVersion from './versions/EvidenceVersion'
+import PreciousMetalsVersion from './versions/PreciousMetalsVersion'
 import './styles/god-tier.css'
+import './styles/precious-metals.css'
 import './styles/globals.css'
 
 function App() {
   return (
     <div className="relative">
-      <EvidenceVersion />
+      <PreciousMetalsVersion />
     </div>
   )
 }
