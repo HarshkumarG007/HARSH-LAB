@@ -220,7 +220,7 @@ function SceneContent() {
       <AtmosphericFog />
 
       <fog attach="fog" args={['#020204', 5, 25]} />
-      <Environment preset="night" />
+      {/* Removed CDN Environment preset to prevent fetch errors */}
     </>
   )
 }

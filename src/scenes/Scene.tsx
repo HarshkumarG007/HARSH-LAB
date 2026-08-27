@@ -154,7 +154,7 @@ function SceneContent() {
       <ParticleField />
       <FloatingGeometry />
       <ConnectionLines />
-      <DreiEnvironment preset="night" />
+      {/* Removed CDN Environment preset to prevent fetch errors */}
       
       {/* Fog */}
       <fog attach="fog" args={['#050505', 5, 20]} />

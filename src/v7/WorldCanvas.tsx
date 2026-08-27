@@ -99,7 +99,7 @@ export default function WorldCanvas({ mouseX, mouseY, isMobile }: WorldCanvasPro
         <WorldScene mouseX={mouseX} mouseY={mouseY} />
         <ScrollCamera ref={scrollCamRef} />
         {!isMobile && <PostProcessing />}
-        <Environment preset="night" />
+        {/* Removed CDN Environment preset to prevent fetch errors; using SceneLighting instead */}
       </Suspense>
     </Canvas>
   )
