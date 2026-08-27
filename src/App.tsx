@@ -1,13 +1,17 @@
-import PreciousMetalsVersion from './versions/PreciousMetalsVersion'
+import { VersionProvider } from './contexts/VersionContext'
+import VersionRouter from './components/VersionRouter'
+import VersionSwitcher from './components/VersionSwitcher'
 import './styles/god-tier.css'
 import './styles/precious-metals.css'
-import './styles/globals.css'
 
 function App() {
   return (
-    <div className="relative">
-      <PreciousMetalsVersion />
-    </div>
+    <VersionProvider>
+      <div className="relative">
+        <VersionRouter />
+        <VersionSwitcher />
+      </div>
+    </VersionProvider>
   )
 }
 
