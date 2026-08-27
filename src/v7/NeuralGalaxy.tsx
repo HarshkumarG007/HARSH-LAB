@@ -118,9 +118,11 @@ function sampleTextPositions(text: string[], count: number): THREE.Vector3[] {
   return positions
 }
 
+import { MotionValue } from 'framer-motion'
+
 interface NeuralGalaxyProps {
-  mouseX: number
-  mouseY: number
+  mouseX: MotionValue<number>
+  mouseY: MotionValue<number>
 }
 
 export default function NeuralGalaxy({ mouseX, mouseY }: NeuralGalaxyProps) {
@@ -189,8 +191,8 @@ export default function NeuralGalaxy({ mouseX, mouseY }: NeuralGalaxyProps) {
     uniforms.uTime.value = clock.elapsedTime
     // Map screen mouse to 3D world coords
     uniforms.uMousePos.value.set(
-      (mouseX / size.width  - 0.5) * 16,
-      -(mouseY / size.height - 0.5) * 6,
+      (mouseX.get() / size.width  - 0.5) * 16,
+      -(mouseY.get() / size.height - 0.5) * 6,
       0
     )
   })

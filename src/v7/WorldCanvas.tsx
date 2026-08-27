@@ -23,8 +23,10 @@ function SceneLighting() {
   )
 }
 
+import { MotionValue } from 'framer-motion'
+
 // Section groups positioned in 3D world space
-function WorldScene({ mouseX, mouseY }: { mouseX: number; mouseY: number }) {
+function WorldScene({ mouseX, mouseY }: { mouseX: MotionValue<number>; mouseY: MotionValue<number> }) {
   return (
     <>
       <SceneLighting />
@@ -67,8 +69,8 @@ function WorldScene({ mouseX, mouseY }: { mouseX: number; mouseY: number }) {
 }
 
 interface WorldCanvasProps {
-  mouseX: number
-  mouseY: number
+  mouseX: MotionValue<number>
+  mouseY: MotionValue<number>
   isMobile: boolean
 }
 

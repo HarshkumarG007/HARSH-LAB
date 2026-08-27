@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useMotionValue } from 'framer-motion'
 import WorldCanvas from '../v7/WorldCanvas'
 
 // HTML sections positioned over the 3D canvas
@@ -114,10 +114,11 @@ function NexusHUD({ progress }: { progress: number }) {
 }
 
 export default function NexusVersion() {
-  const [mouseX, setMouseX] = useState(0)
-  const [mouseY, setMouseY]  = useState(0)
-  const [scrollProgress, setScrollProgress] = useState(0)
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
+  const scrollProgress = useMotionValue(0)
   const [isMobile, setIsMobile] = useState(false)
+  const [hudProgress, setHudProgress] = useState(0)
 
   useEffect(() => {
     setIsMobile(window.innerWidth < 768 || navigator.maxTouchPoints > 0)
@@ -125,14 +126,16 @@ export default function NexusVersion() {
 
   useEffect(() => {
     const handleMouse = (e: MouseEvent) => {
-      setMouseX(e.clientX)
-      setMouseY(e.clientY)
+      mouseX.set(e.clientX)
+      mouseY.set(e.clientY)
     }
     const handleScroll = () => {
       const doc = document.documentElement
       const scrolled = doc.scrollTop
       const total = doc.scrollHeight - doc.clientHeight
-      setScrollProgress(total > 0 ? scrolled / total : 0)
+      const p = total > 0 ? scrolled / total : 0
+      scrollProgress.set(p)
+      setHudProgress(p) // only hud needs react state
     }
 
     window.addEventListener('mousemove', handleMouse, { passive: true })
@@ -141,7 +144,7 @@ export default function NexusVersion() {
       window.removeEventListener('mousemove', handleMouse)
       window.removeEventListener('scroll', handleScroll)
     }
-  }, [])
+  }, [mouseX, mouseY, scrollProgress])
 
   // MOBILE: fall back to simple dark page (3D too heavy)
   if (isMobile) {
@@ -177,7 +180,7 @@ export default function NexusVersion() {
       {/* Scrollable HTML overlay — triggers camera movement */}
       <div className="relative z-10" style={{ pointerEvents: 'none' }}>
         <NexusNav />
-        <NexusHUD progress={scrollProgress} />
+        <NexusHUD progress={hudProgress} />
 
         {/* Scroll height creates the scroll trigger zones */}
         {/* Each section is one full viewport height */}
