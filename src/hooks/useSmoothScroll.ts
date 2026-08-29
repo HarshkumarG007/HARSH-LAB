@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import Lenis from '@studio-freight/lenis'
+import { useSystemProgress } from '../system01/state/systemProgress'
 
 export function useSmoothScroll() {
   const lenisRef = useRef<Lenis | null>(null)
@@ -13,6 +14,12 @@ export function useSmoothScroll() {
       smoothWheel: true,
       wheelMultiplier: 1.2,
       touchMultiplier: 2,
+    })
+
+    // Bridge scroll progress to the global store without React render cycle
+    lenis.on('scroll', (e: any) => {
+      // e.progress is 0 to 1
+      useSystemProgress.getState().setProgress(e.progress)
     })
 
     lenisRef.current = lenis
