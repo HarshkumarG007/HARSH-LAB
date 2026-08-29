@@ -20,6 +20,7 @@ const versionIcons: Record<DesignVersion, typeof Zap> = {
   'v4-evidence': Shield,
   'v5-precious-metals': Gem,
   'v7-nexus': Hexagon,
+  'v8-system01': Sparkles,
 }
 
 const versionGradients: Record<DesignVersion, string> = {
@@ -29,6 +30,7 @@ const versionGradients: Record<DesignVersion, string> = {
   'v4-evidence': 'from-emerald-400 to-green-600',
   'v5-precious-metals': 'from-yellow-400 via-amber-300 to-yellow-600',
   'v7-nexus': 'from-indigo-600 via-purple-600 to-fuchsia-600',
+  'v8-system01': 'from-rose-500 via-red-500 to-pink-600',
 }
 
 export default function VersionSwitcher() {

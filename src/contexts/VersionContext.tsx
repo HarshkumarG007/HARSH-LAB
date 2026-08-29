@@ -7,6 +7,7 @@ export type DesignVersion =
   | 'v4-evidence'
   | 'v5-precious-metals'
   | 'v7-nexus'
+  | 'v8-system01'
 
 interface VersionContextType {
   currentVersion: DesignVersion
@@ -26,6 +27,7 @@ const VERSION_NAMES: Record<DesignVersion, string> = {
   'v4-evidence':         'Evidence',
   'v5-precious-metals':  'Haute Couture',
   'v7-nexus':            'NEXUS',
+  'v8-system01':         'SYSTEM 01 Canary',
 }
 
 const VERSION_DESCRIPTIONS: Record<DesignVersion, string> = {
@@ -35,6 +37,7 @@ const VERSION_DESCRIPTIONS: Record<DesignVersion, string> = {
   'v4-evidence':         'Radical transparency with commit analysis',
   'v5-precious-metals':  'Gold, Platinum, Gemstones photorealistic materials',
   'v7-nexus':            '3D living universe — particle text, fluid sim, orbital credentials',
+  'v8-system01':         'DOM-first narrative fallback (Phase 2)',
 }
 
 const VERSION_COLORS: Record<DesignVersion, string> = {
@@ -44,6 +47,7 @@ const VERSION_COLORS: Record<DesignVersion, string> = {
   'v4-evidence':         '#10B981',
   'v5-precious-metals':  '#D4AF37',
   'v7-nexus':            '#818CF8',
+  'v8-system01':         '#F43F5E',
 }
 
 export function VersionProvider({ children }: { children: React.ReactNode }) {
@@ -60,6 +64,7 @@ export function VersionProvider({ children }: { children: React.ReactNode }) {
     else if (path === '/experiments/god') initialVersion = 'v3-god-tier'
     else if (path === '/experiments/evidence') initialVersion = 'v4-evidence'
     else if (path === '/experiments/metals') initialVersion = 'v5-precious-metals'
+    else if (path === '/experiments/system01') initialVersion = 'v8-system01'
     
     setCurrentVersion(initialVersion)
     
@@ -72,6 +77,7 @@ export function VersionProvider({ children }: { children: React.ReactNode }) {
       else if (p === '/experiments/god') v = 'v3-god-tier'
       else if (p === '/experiments/evidence') v = 'v4-evidence'
       else if (p === '/experiments/metals') v = 'v5-precious-metals'
+      else if (p === '/experiments/system01') v = 'v8-system01'
       
       setCurrentVersion(v)
     }
@@ -93,6 +99,7 @@ export function VersionProvider({ children }: { children: React.ReactNode }) {
       else if (version === 'v3-god-tier') newPath = '/experiments/god'
       else if (version === 'v4-evidence') newPath = '/experiments/evidence'
       else if (version === 'v5-precious-metals') newPath = '/experiments/metals'
+      else if (version === 'v8-system01') newPath = '/experiments/system01'
       
       window.history.pushState({}, '', newPath)
       
