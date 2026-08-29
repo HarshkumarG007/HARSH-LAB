@@ -1,5 +1,8 @@
+import { Suspense, lazy } from 'react'
 import SystemStaticFallback from '../system01/fallback/SystemStaticFallback'
 import { useSystemProgress } from '../system01/state/systemProgress'
+
+const Scene = lazy(() => import('../system01/Scene'))
 
 function ScrollHUD() {
   const progress = useSystemProgress(s => s.progress)
@@ -18,10 +21,22 @@ function ScrollHUD() {
 }
 
 export default function System01Version() {
+  const reducedMotion = useSystemProgress(s => s.reducedMotion)
+
   return (
     <>
       <ScrollHUD />
-      <SystemStaticFallback />
+      
+      {!reducedMotion && (
+        <Suspense fallback={null}>
+          <Scene />
+        </Suspense>
+      )}
+
+      {/* The DOM overlay sits on top of the fixed canvas */}
+      <div className="relative z-10">
+        <SystemStaticFallback />
+      </div>
     </>
   )
 }

@@ -15,7 +15,7 @@ const systemLayers: { id: LayerId, title: string, description: string }[] = [
 
 export default function SystemStaticFallback() {
   return (
-    <main className="min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-indigo-500/30">
+    <main className="min-h-screen bg-transparent text-slate-200 font-sans selection:bg-indigo-500/30">
       {/* 1. Header / Initializing */}
       <header className="max-w-7xl mx-auto px-6 pt-32 pb-24 border-b border-white/10">
         <div className="flex items-center gap-4 mb-8">
