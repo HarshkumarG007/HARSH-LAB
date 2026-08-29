@@ -21,9 +21,9 @@ The core data model is located in `src/data/`:
 - **Scroll**: Lenis smooth scrolling (on supported desktop views)
 - **Styling**: Tailwind CSS + Custom Performance CSS utilities
 
-## Design Archive (Versions)
+## Design Directions Explored
 
-The site contains a built-in archive of multiple design explorations (accessible via the `Ctrl+Shift+V` switcher or the bottom navigation):
+The site contains a built-in menu of multiple design explorations (accessible via the `Ctrl+Shift+V` switcher or the bottom navigation):
 - **V7 NEXUS (Default)**: The canonical 3D WebGL experience.
 - **V6 Precious Metals**: Premium brutalism with typography focus.
 - **V5 God Tier**: High-contrast, monochromatic engineering focus.
