@@ -1,11 +1,11 @@
-name: Lighthouse CI
+name: CI Performance Budgets
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
 jobs:
-  lighthouse:
+  performance:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -16,6 +16,8 @@ jobs:
         run: npm ci
       - name: Build project
         run: npm run build
+      - name: Enforce Bundle Size Budget
+        run: npm run size
       - name: Run Lighthouse CI
         run: npx lhci autorun --config=./.lighthouserc.cjs
         env:
