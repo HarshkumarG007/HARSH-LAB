@@ -37,27 +37,20 @@ export class ErrorBoundary extends Component<Props, State> {
               <h2 className="text-2xl font-bold">Something went wrong</h2>
             </div>
             
-            {import.meta.env.DEV && (
-              <>
-                <div className="mb-6">
-                  <h3 className="text-lg font-semibold text-white mb-2">Error:</h3>
-                  <pre className="bg-slate-950 p-4 rounded-lg text-red-300 text-sm overflow-x-auto whitespace-pre-wrap">
-                    {this.state.error?.toString()}
-                  </pre>
-                </div>
-                
-                <div className="mb-8">
-                  <h3 className="text-lg font-semibold text-white mb-2">Component Stack:</h3>
-                  <pre className="bg-slate-950 p-4 rounded-lg text-slate-300 text-sm overflow-x-auto whitespace-pre-wrap">
-                    {this.state.errorInfo?.componentStack}
-                  </pre>
-                </div>
-              </>
-            )}
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold text-white mb-2">Error Details:</h3>
+              <pre className="bg-slate-950 p-4 rounded-lg text-red-300 text-sm overflow-x-auto whitespace-pre-wrap">
+                {this.state.error?.toString()}
+              </pre>
+            </div>
+            
+            <p className="text-slate-400 mt-4 text-center">
+              Please paste the error above to the assistant so we can debug it immediately.
+            </p>
             
             <button
               onClick={() => window.location.reload()}
-              className="px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg font-medium transition-colors"
+              className="mt-6 w-full px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg font-medium transition-colors"
             >
               Reload Application
             </button>
