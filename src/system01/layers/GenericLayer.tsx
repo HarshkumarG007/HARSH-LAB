@@ -19,12 +19,13 @@ const GenericLayer = forwardRef<THREE.Group, GenericLayerProps>((_, ref) => {
         <meshPhysicalMaterial 
           color="#818CF8"
           transparent
-          opacity={0.15}
-          roughness={0.2}
-          metalness={0.8}
-          transmission={0.5}
+          opacity={0.4}
+          roughness={0.1}
+          metalness={0.3}
+          transmission={0.9}
+          ior={1.5}
+          thickness={0.5}
           side={THREE.DoubleSide}
-          wireframe={false}
         />
       </mesh>
 

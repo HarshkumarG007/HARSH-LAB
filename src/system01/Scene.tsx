@@ -4,6 +4,7 @@ import { PerformanceMonitor, AdaptiveDpr, Environment } from '@react-three/drei'
 import { EffectComposer, Bloom } from '@react-three/postprocessing'
 import ExplodedTransformController from './core/ExplodedTransformController'
 import EvidenceMatrixRenderer from './evidence/EvidenceMatrixRenderer'
+import MouseParallax from './core/MouseParallax'
 
 export default function Scene() {
   const [dpr, setDpr] = useState(1.5)
@@ -26,6 +27,7 @@ export default function Scene() {
         <directionalLight position={[10, 10, 5]} intensity={1.5} color="#818CF8" />
         <directionalLight position={[-10, -10, -5]} intensity={1} color="#F43F5E" />
         <Environment preset="city" />
+        <MouseParallax />
 
         <Suspense fallback={null}>
           <ExplodedTransformController />
@@ -35,9 +37,10 @@ export default function Scene() {
         {/* Post-processing */}
         <EffectComposer>
           <Bloom 
-            luminanceThreshold={0.2} 
-            luminanceSmoothing={0.9} 
-            intensity={1.5} 
+            luminanceThreshold={0.5} 
+            luminanceSmoothing={0.7} 
+            intensity={2.5} 
+            mipmapBlur
           />
         </EffectComposer>
       </Canvas>
