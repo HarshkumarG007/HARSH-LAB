@@ -24,12 +24,9 @@ test.describe('HARSH LAB Portfolio', () => {
     // Wait for loader to disappear
     await expect(page.locator('#initial-loader')).toBeHidden({ timeout: 10000 });
 
-    const contactButton = page.getByRole('button', { name: /Send message via contact form/i });
-    await expect(contactButton).toBeVisible();
-    await contactButton.click();
-
-    const modalTitle = page.getByText('Secure Channel');
-    await expect(modalTitle).toBeVisible();
+    const contactLink = page.getByRole('link', { name: /Initialize Contact/i });
+    await expect(contactLink).toBeVisible();
+    await expect(contactLink).toHaveAttribute('href', 'mailto:contact@example.com');
   });
 
   test('should successfully switch versions via VersionSwitcher', async ({ page, isMobile }) => {
