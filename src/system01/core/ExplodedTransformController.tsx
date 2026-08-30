@@ -5,8 +5,9 @@ import { LayerId } from '../types'
 import { useSystemProgress } from '../state/systemProgress'
 import GenericLayer from '../layers/GenericLayer'
 import SystemCore from './SystemCore'
+import ProjectAssemblyRenderer from '../projects/ProjectAssemblyRenderer'
 
-const LAYERS: LayerId[] = [
+export const LAYERS: LayerId[] = [
   'DATA',
   'MODELS',
   'RETRIEVAL',
@@ -60,6 +61,7 @@ export default function ExplodedTransformController() {
     <group ref={groupRef}>
       {/* The central core sits inside the controller so it spins together */}
       <SystemCore />
+      <ProjectAssemblyRenderer />
 
       {LAYERS.map((id, index) => (
         <GenericLayer
