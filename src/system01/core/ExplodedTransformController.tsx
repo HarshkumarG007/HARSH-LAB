@@ -6,6 +6,7 @@ import { useSystemProgress } from '../state/systemProgress'
 import GenericLayer from '../layers/GenericLayer'
 import SystemCore from './SystemCore'
 import ProjectAssemblyRenderer from '../projects/ProjectAssemblyRenderer'
+import DataConnectors from './DataConnectors'
 
 export const LAYERS: LayerId[] = [
   'DATA',
@@ -62,6 +63,7 @@ export default function ExplodedTransformController() {
       {/* The central core sits inside the controller so it spins together */}
       <SystemCore />
       <ProjectAssemblyRenderer />
+      <DataConnectors />
 
       {LAYERS.map((id, index) => (
         <GenericLayer
