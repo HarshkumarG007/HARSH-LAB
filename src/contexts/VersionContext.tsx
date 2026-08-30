@@ -36,8 +36,8 @@ const VERSION_DESCRIPTIONS: Record<DesignVersion, string> = {
   'v3-god-tier':         'Physics-based interactions with precious materials',
   'v4-evidence':         'Radical transparency with commit analysis',
   'v5-precious-metals':  'Gold, Platinum, Gemstones photorealistic materials',
-  'v7-nexus':            '3D living universe — particle text, fluid sim, orbital credentials',
-  'v8-system01':         'DOM-first narrative fallback (Phase 2)',
+  'v7-nexus':            'Previous Gen: 3D living universe',
+  'v8-system01':         'SYSTEM 01 (LIVE) - Scroll-driven architectural deconstruction',
 }
 
 const VERSION_COLORS: Record<DesignVersion, string> = {
@@ -51,13 +51,13 @@ const VERSION_COLORS: Record<DesignVersion, string> = {
 }
 
 export function VersionProvider({ children }: { children: React.ReactNode }) {
-  const [currentVersion, setCurrentVersion] = useState<DesignVersion>('v7-nexus')
+  const [currentVersion, setCurrentVersion] = useState<DesignVersion>('v8-system01')
   const [isTransitioning, setIsTransitioning] = useState(false)
 
   // Initialize version from URL
   useEffect(() => {
     const path = window.location.pathname
-    let initialVersion: DesignVersion = 'v7-nexus'
+    let initialVersion: DesignVersion = 'v8-system01'
     
     if (path === '/experiments/matrix') initialVersion = 'v1-cyberpunk'
     else if (path === '/experiments/luxe') initialVersion = 'v2-premium'
@@ -71,7 +71,7 @@ export function VersionProvider({ children }: { children: React.ReactNode }) {
     // Listen for browser back/forward navigation
     const handlePopState = () => {
       const p = window.location.pathname
-      let v: DesignVersion = 'v7-nexus'
+      let v: DesignVersion = 'v8-system01'
       if (p === '/experiments/matrix') v = 'v1-cyberpunk'
       else if (p === '/experiments/luxe') v = 'v2-premium'
       else if (p === '/experiments/god') v = 'v3-god-tier'
