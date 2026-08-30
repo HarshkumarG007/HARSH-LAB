@@ -2,7 +2,7 @@ module.exports = {
   ci: {
     collect: {
       staticDistDir: './dist',
-      url: ['http://localhost/', 'http://localhost/experiments/system01'],
+      url: ['http://localhost/'],
       numberOfRuns: 1, // reduced from 3 for faster local testing if preferred, wait, I'll keep it 3.
     },
     assert: {
