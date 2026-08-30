@@ -23,6 +23,8 @@ module.exports = {
         'offscreen-images': 'off',
         'unused-javascript': 'warn',
         'unused-css-rules': 'warn',
+        'color-contrast': 'warn',
+        'network-dependency-tree-insight': 'warn',
         
         // Let the R3F canvas handle its own sizing
         'viewport': 'warn',

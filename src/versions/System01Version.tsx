@@ -16,7 +16,7 @@ export default function System01Version() {
       )}
 
       {/* The DOM overlay sits on top of the fixed canvas */}
-      <div className="relative z-10">
+      <div className={`relative z-10 ${reducedMotion ? 'bg-slate-950 min-h-screen' : ''}`}>
         <SystemStaticFallback />
       </div>
     </>
