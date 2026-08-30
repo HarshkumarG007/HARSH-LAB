@@ -37,7 +37,7 @@ export default function DataConnectors() {
       const geoRef = geoRefs.current[idx]
       const matRef = materialRefs.current[idx]
       
-      if (!geoRef.current || !matRef.current) return
+      if (!geoRef.current || !matRef.current || !geoRef.current.attributes.position) return
 
       // Target Coordinates
       const key = proj.id.toLowerCase()
