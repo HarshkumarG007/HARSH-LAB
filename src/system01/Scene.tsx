@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber'
 import { PerformanceMonitor, AdaptiveDpr, Environment } from '@react-three/drei'
 import { EffectComposer, Bloom } from '@react-three/postprocessing'
 import ExplodedTransformController from './core/ExplodedTransformController'
+import EvidenceMatrixRenderer from './evidence/EvidenceMatrixRenderer'
 
 export default function Scene() {
   const [dpr, setDpr] = useState(1.5)
@@ -28,6 +29,7 @@ export default function Scene() {
 
         <Suspense fallback={null}>
           <ExplodedTransformController />
+          <EvidenceMatrixRenderer />
         </Suspense>
 
         {/* Post-processing */}
